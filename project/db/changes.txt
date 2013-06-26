@@ -1,0 +1,4 @@
+
+
+june 25-2013
+ALTER TABLE  `reviews` ADD  `userid` INT NOT NULL AFTER  `id`
