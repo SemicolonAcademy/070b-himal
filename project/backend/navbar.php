@@ -12,7 +12,7 @@
             <ul class="nav">
               <li class="active"><a href="index.php">Home</a></li>
               <li><a href="users.php">Users</a></li>
-              <li><a href="#">Profiles</a></li>
+              <li><a href="profile.php">Profiles</a></li>
 			  <li><a href="#">Appointments</a></li>
               <li><a href="#">Reviews</a></li>
 			  <li><a href="#">Contacts</a></li>
