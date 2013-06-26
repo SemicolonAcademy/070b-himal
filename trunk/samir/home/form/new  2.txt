@@ -1,0 +1,5 @@
+<a href='whatever.php?phone=0001112222'>click</a>
+
+then on the next page (whatever.php) you can access this var via:
+
+$_GET['phone']
