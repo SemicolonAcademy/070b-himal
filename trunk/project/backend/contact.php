@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <?php
+     include "config.php";
      global $ename,$ephone,$eemail; 
-     mysql_connect("localhost","root","");   //To connect to database having field (host-name,user,password)
-     mysql_select_db("htnepal");             //To select database 
+    
      $time=date("F j, Y, g:i a");
 	      
 	       if(isset($_POST['signin']))

@@ -1,7 +1,5 @@
 <?php
-  mysql_connect("localhost","root","") or die("Not Connected");
-  mysql_select_db("htnepal");
-  
+ include "config.php";
 
           if(isset($_POST['signin']))
 		  {

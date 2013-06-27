@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <?php 
-     mysql_connect("localhost","root","");   //To connect to database having field (host-name,user,password)
-     mysql_select_db("htnepal");
+    include "config.php";
      $id=$_GET['id'];
      echo $id ;	 
      $q="select * from contact WHERE `contact`.`id` = $id";
