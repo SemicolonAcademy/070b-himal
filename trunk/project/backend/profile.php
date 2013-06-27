@@ -15,6 +15,7 @@
    $location = $_POST['tlocation'];
    $qualification = $_POST['qualification'];
    $experience = $_POST['experience'];
+   $experiyence_year=$_POST['experiyence_year'];
    $no_student = $_POST['no_student'];
    $shift = $_POST['shift'];
    $timeslot = $_POST['time'];
@@ -25,13 +26,12 @@
 				
 				$insert  = "INSERT INTO `profiles` 
 			       ( `userid`, `bio`, `age`, `permanent_address`, `temp_address`, `teaching_city`, `teaching_location`, `teacher_qualification`, `teaching_experience`, `experience_years`, `max_students`, `expected_fee`, `available_shift`, `available_timeslot`, `created_at`) 
-			  VALUES ( ' {$userid}', ' {$bio}', ' {$age}', '  { $paddress}', ' { $taddress}', '{$city}', '  {$location}', ' {$qualification}', '  {$experience}', '5', ' {$no_student}', ' {$fee}', ' {$shift}', '{  $timeslot}', ' {$time}')";
+			  VALUES ( ' {$userid}', ' {$bio}', ' {$age}', '  { $paddress}', ' { $taddress}', '{$city}', '  {$location}', ' {$qualification}', '  {$experience}', '{   $experiyence_year}', ' {$no_student}', ' {$fee}', ' {$shift}', '{ $timeslot}', ' {$time}')";
 		  
 		         $result=mysql_query($insert);
 				 
 		  
-		  
-		  
+		         
 		  }
    
 
@@ -70,29 +70,31 @@
       <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
                     <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
                                    <link rel="shortcut icon" href="assets/ico/favicon.png">
-  </head>
+                                   <style type="text/css">
+<!--
+.style1 {color: #0000FF}
+-->
+                                   </style>
+</head>
 
   <body>
 
-   <?php
-   
-             include "navbar.php";
-   
-   ?>
+   <?php include "navbar.php";?>
 
     <div class="container">
 
-      <h1 align="center">Home Tuition Nepal</h1>
-	  <hr>
-	                    <form class="bs-docs-example form-horizontal"  enctype="multipart/form-data"method="POST">
+     
+	           <!-- <h3 align="right"> <a  href="profile_edit.php >Edite Profile</a></h3>-->
+	<h3>Submit Profile<h3> <a href="profile_edit.php"><h3 align="right" class="style1">Edit Profile</h3></a>
+	                    <form class="bs-docs-example form-horizontal"  method="POST">
 						 
-						 <div class="control-group"> <h3>Profile<h3>
+						 <div class="control-group"> 
 						  
 						         <div class="control-group">
 						                <label class="control-label" for="inputAddress">User ID :</label>
 						           <div class="controls">
 						                    <input type="text" name="uid" required >
-							        </div>
+						           </div>
 							     </div>
 							
 							
@@ -100,8 +102,8 @@
 						                 <label class="control-label" for="inputAddress">Biodata :</label>
 						            <div class="controls">
 							                <textarea rows="3" name="bio" required></textarea>
-							         </div>
-							     </div>
+						          </div>
+					      </div>
 							
                            
 						        <div class="control-group">
@@ -109,28 +111,28 @@
 						             <div class="controls">
 						                    <input type="text" name="age" id="age" required >
 							         </div>
-							     </div>
+					      </div>
 						
 						        <div class="control-group">
 						                <label class="control-label" for="inputAddress">Permanent Address :</label>
 						             <div class="controls">
-						                    <input type="text" name="paddress" id="inputEmail" required >
+						                    <input type="text" name="paddress" id="inputEmail"  >
 							         </div>
 							    </div>
 							
 							    <div class="control-group">
 						                <label class="control-label" for="inputAddress">Temporary Address :</label>
 						             <div class="controls">
-						                    <input type="text" name="taddress" id="inputEmail" required >
+						                    <input type="text" name="taddress" id="inputEmail"  >
 							        </div>
-							     </div>
+					      </div>
 							
 							    <div class="control-group">
                                         <label class="control-label" for="inputEmail">Phone No :</label>
                                      <div class="controls">
                                             <input type="text" id="inputPhone" name="phone" required>
                                      </div>
-                                 </div>
+                          </div>
 							
 							     <div class="control-group">
 						                <label class="control-label" for="inputAddress" required>Teaching City :</label>
@@ -161,14 +163,36 @@
 						            <div class="controls">
 							                  <textarea rows="3" name="qualification" required></textarea>
 							        </div>
-							     </div>
+					      </div>
 							
 							    <div class="control-group">
 						                 <label class="control-label" for="inputAddress">Teaching Experience :</label>
 						             <div class="controls">
-							                 <textarea rows="3" name="experience" required></textarea>
+							                 <textarea rows="3" name="experience" ></textarea>
 							         </div>
-							     </div>
+					      </div>
+						   <div class="control-group">
+						                <label class="control-label" for="inputAddress">Experience Year :</label>
+						             <div class="controls" >
+						
+                                             <select name="experiyence_year" required>
+                                                  <option>0</option>
+                                                  <option>1</option>
+                                                  <option>2</option>
+                                                   <option>3</option>
+                                                  <option>4</option>
+												   <option>5</option>
+												    <option>6</option>
+													 <option>7</option>
+													  <option>8</option>
+													   <option>9</option>
+													    <option>10</option>
+														
+                                             </select>
+            
+       
+		                            </div>
+		                         </div>
 							
 							     <div class="control-group">
 						                <label class="control-label" for="inputAddress">Number of Students :</label>
@@ -190,7 +214,7 @@
                                          <label class="control-label" for="inputEmail">Expected Fee :</label>
                                     <div class="controls">
                                              <input type="text" id="inputEmail" name="fee" required>
-                                     </div>
+                                   </div>
                                  </div>
 							
 							<div class="control-group">
@@ -206,12 +230,12 @@
                                          </select>
             
                         
-                                 </div>
-		                     </div>
+                              </div>
+	                      </div>
                 		  
 						     <div class="control-group">
-						          </label> <label class="control-label" for="inputAddress">Available Time Slot : :</label>
-						         <div class="controls" required>
+						          </label> <label class="control-label" for="inputAddress">Available Time Slot : </label>
+						         <div class="controls" >
 						
                                           <select name="time">
                                               <option>1</option>
@@ -219,10 +243,10 @@
                                                     <option>3</option>
                                                       <option>4</option>
                                                        <option>5</option>
-                                                          </select>
+                                   </select>
             
                      
-		                          </div>
+	                           </div>
 		                     </div>
                 
 							
@@ -231,11 +255,11 @@
                                    
                                          <button type="submit" name="signin" class="btn">Sign in</button>
                                      </div>
-                                </div>
-                         </form>
+                          </div>
+      </form>
       
 
-    </div> <!-- /container -->
+  </div> <!-- /container -->
 
     <!-- Le javascript
     ================================================== -->
