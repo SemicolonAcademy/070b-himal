@@ -1,6 +1,0 @@
-2013/6/26 10:06pm
-
-
-ALTER TABLE  `contact` CHANGE  `created_at`  `created_at` VARCHAR( 255 ) NOT NULL
-ALTER TABLE  `appointments` CHANGE  `appointment_date`  `appointment_date` VARCHAR( 50 ) NOT NULL
-ALTER TABLE  `appointments` CHANGE  `created_at`  `created_at` VARCHAR( 255 ) NOT NULL
