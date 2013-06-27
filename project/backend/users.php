@@ -1,6 +1,5 @@
 <?php
-	mysql_connect("localhost","root","");
-	mysql_select_db("htnepal");
+	include "config.php";
 	$q="select * from users";
 	$result=mysql_query($q);	
 ?>
@@ -78,7 +77,7 @@
 			<td><?php echo $row['address']; ?></td>
 			<td><?php echo $row['status']; ?></td>
 			<td><?php echo date("Y-m-d H:i",$row['created_on']); ?></td>
-			<td><a href="users_edit.php?id=<?php echo $row[id];?>">edit</a> &nbsp <a href="users_del.php?id=<?php echo $row[id];?>">delete</a></td>
+			<td><a href="edit.php?id=<?php echo $row[id];?>">edit</a> &nbsp <a href="del.php?id=<?php echo $row[id];?>">delete</a></td>
 			</tr>
 		<?php
 		}?>

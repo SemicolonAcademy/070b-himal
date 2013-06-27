@@ -1,6 +1,5 @@
 <?php
-	mysql_connect("localhost","root","");
-	mysql_select_db("htnepal");	 
+	include "config.php";
 	$id=$_GET["id"];
 	$q="select * from users WHERE `users`.`id` = $id";
 	$result=mysql_query($q);
