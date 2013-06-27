@@ -1,8 +1,196 @@
 <?php
 	include "config.php";
-	$q="select * from users";
-	$result=mysql_query($q);	
+	
+	$action = $_GET['action'];
+	$form_action = (isset($_GET['form_action'])) ? $_GET['form_action'] : "insert";
+	
+	
+	
+	if ($action == "delete"){		
+		
+		$id=$_GET["id"];		
+		
+		$q="select * from users WHERE `id` = $id";
+		$result=mysql_query($q);	
+		$row=mysql_fetch_assoc($result);	
+		$imagename=$row["photo"];
+		$dest='./uploads/'.$imagename;
+		@unlink($dest);
+			
+		$del="DELETE FROM `users` WHERE `id` =$id  LIMIT 1";
+		mysql_query($del);
+		
+		header('Location:users.php');
+	}
+	
+	
+	if ($form_action == "edit" && !$_POST['user_edit']){
+			
+			$id=$_GET["id"];			
+			
+			$get_user_details_query = "select * from users WHERE `users`.`id` = $id";
+			$edit_user = mysql_query($get_user_details_query);			
+			$user_data = mysql_fetch_assoc($edit_user);
+			
+			$imagename= $user_data["photo"];
+			
+			$username= $user_data["username"];
+			$first_name=$user_data["first_name"];
+			$middle_name=$user_data["middle_name"];
+			$last_name=$user_data["last_name"];
+			$email=$user_data["email"];
+			$password=$user_data["password"];
+			$password_check= $user_data["password"];
+			$gender=$user_data["gender"];
+			$phone=$user_data["phone"];
+			$address=$user_data["address"];
+			
+			
+	
+	}
+	
+	
+	if (isset ($_POST['user_insert']) || isset ($_POST['user_edit']) ){
+	
+		/*		
+			--------- Handle file upload first -------------
+		*/
+		
+			if ($_FILES) {
+			
+				$src=$_FILES['image']['tmp_name'];
+				$dest='./uploads/'.$_FILES['image']['name'];
+				
+				$filename=$_FILES['image']['name'];
+			
+			
+				$pos1=strpos($filename,'.');
+				$image_type=substr($filename,-(strlen($filename)-$pos1)+1);
+				$allowed_type = array ('jpeg','jpg','bmp','png','gif'); 
+			
+				if(!in_array($image_type, $allowed_type)) {
+					$eimage= "Disallowed file type. Please upload jpeg / bmp / png / gif only";
+					$error = true;		
+				}else {		
+					if (!move_uploaded_file($src,$dest)){
+						$eimage= "File upload failed. Retry later.";
+						$error = true;		
+					}
+				}
+				
+			}	
+			
+			
+			/*		
+				--------- Grab data for insert or update -------------
+			*/
+		
+			
+			$username=$_POST["username"];
+			$first_name=$_POST["first_name"];
+			$middle_name=$_POST["middle_name"];
+			$last_name=$_POST["last_name"];
+			$email=$_POST["email"];
+			$password=$_POST["password"];
+			$password_check=$_POST["password_check"];
+			$gender=$_POST["gender"];
+			$phone=$_POST["phone"];
+			$address=$_POST["address"];
+			
+			
+		
+		
+			/*		
+				--------- Form Validation for Insert or update -------------
+			*/
+		
+	
+			if ($username == '') {
+				$error = true; $eusername = "Enter your name !!";
+			}
+			if ($email == '') {
+				$error = true;  $eemail="Enter your email !!";
+			}
+			if ($password == ''){
+				$error = true; $epassword="Enter password !!";
+			}	
+			if($password_check !==$password) {
+				$error = true;  $ecofirm_password="Password does not match !!";
+			}
+			
+			if ($gender== '') { 
+				$error = true;  $egender="Select a gender !!";
+			}
+			if ($first_name=='') {
+				$error = true;  $efirst_name="enter your first name";
+			}
+			if ($last_name=='') {
+				$error = true; $elast_name="enter your last name";
+			}
+			
+			if ($phone=='') { 
+				$error = true; $ephone="enter your phone name";
+			}
+			
+			if ($address==''){
+				$error = true; $eaddress="enter your address";
+			}
+			
+			
+			/*		
+				--------- Check if Error is not present. Build queries. -------------
+			*/
+			
+
+						
+			if (!$error) {		
+
+				$now=time();		
+
+				if (isset($_POST["user_edit"])) {				
+					
+					$id=$_POST['id'];
+					
+					//delete old image
+					$imagename=$_POST["imagename"];		
+					$dest_del='./uploads/'.$imagename;
+					if($src) @unlink ($dest_del);
+					
+					$sql = "UPDATE `users` SET `username` = '$username', `first_name`= '$first_name',`middle_name`= '$middle_name',`last_name`= '$last_name', `password`='$password', `email`='$email', `gender`='$gender', `created_on`='$now',`photo`='$filename',`phone`='$phone',`address`='$address' WHERE `id` = $id LIMIT 1;";
+					
+				
+				} else {			
+
+					echo $sql = "INSERT INTO `htnepal`.`users` (`id`, `username`,`first_name`,`middle_name`,`last_name`, `password`, `email`, `gender`,`phone`,`address`, `created_on`,`photo`) VALUES (NULL, '$username','$first_name','$middle_name','$last_name','$password', '$email', '$gender','$phone','$address', '$now','$filename')";
+					
+
+				}
+
+				/*		
+					--------- If query executes succesfully redirect to base page. -------------
+				*/
+				
+				echo $sql;
+				mysql_query($sql) or die(mysql_error());
+				//header('location: users.php');
+			
+			
+			} 
+		
+	
+	}
+	
+	/*		
+		--------- Grab data for table -------------
+	*/
+		
+	
+	$all_users_query="select * from users";
+	$all_users=mysql_query($all_users_query);	
+	
 ?>
+
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -17,6 +205,9 @@
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
+	  
+	   .error  {color:#ff0000;}
+	   
     </style>
     <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -34,56 +225,56 @@
   </head>
 
   <body>
-  <
-
+  
  <?php include "navbar.php";?>
 
     <div class="container">
 
- <div class="container">
-	<h3>Edit User</h3>
+	<h3>Users</h3>
 			
-	<table class="table table-bordered">
+	<table class="table table-hover">
 		<tr>
-		<td>S.N.</td>
-		<td>Images</td>
-		<td>Username</td>
-		<td>Password</td>
-		<td>First Name</td>
-		<td>Middle Name</td>
-		<td>Last Name</td>
-		<td>Email</td>
-		<td>Gender</td>
-		<td>Phone</td>
-		<td>Address</td>
-		<td>Status</td>
-		<td>Created on</td>
+			<th>S.N.</th>
+			<th>Images</th>
+			<th>Username</th>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Gender</th>
+			<th>Phone</th>
+			<th>Address</th>
+			<th>Status</th>
+			<th>Created on</th>
+			<th>Actions</th>
 		</tr>
-		<?php
-		while($row=mysql_fetch_assoc($result))
-		{ 
-			?>
+		<?php $i=1; while( $user =mysql_fetch_assoc($all_users)) { ?>
 			<tr>
-			<td><?php echo $row[id];?></td>
-			<td><img width="100" src="uploads/<?php echo $row['photo']; ?>" /></td>
-			<td><?php echo $row['username']; ?></td>
-			<td><?php echo $row['password']; ?></td>
-			<td><?php echo $row['first_name']; ?></td>
-			<td><?php echo $row['middle_name']; ?></td>
-			<td><?php echo $row['last_name'];?></td>
-			<td><?php echo $row['email']; ?></td>
-			<td><?php echo $row['gender']; ?></td>
-			<td><?php echo $row['phone']; ?></td>
-			<td><?php echo $row['address']; ?></td>
-			<td><?php echo $row['status']; ?></td>
-			<td><?php echo date("Y-m-d H:i",$row['created_on']); ?></td>
-			<td><a href="edit.php?id=<?php echo $row[id];?>">edit</a> &nbsp <a href="del.php?id=<?php echo $row[id];?>">delete</a></td>
+				<td><?php echo $i;?></td>
+				<td><img width="100" src="uploads/<?php echo $user['photo']; ?>" /></td>
+				<td><?php echo $user['username']; ?></td>
+				<td><?php echo $user['first_name'] . " " . $user['middle_name'] . " " . $user['last_name'];?></td>
+				<td><?php echo $user['email']; ?></td>
+				<td><?php echo ($user['gender'] == "m") ? "Male" : "Female"; ?></td>
+				<td><?php echo $user['phone']; ?></td>
+				<td><?php echo $user['address']; ?></td>
+				<td><?php echo ($user['status'] == 0) ? "Inactive" : "Active"; ?></td>
+				<td><?php echo date("m-d-Y", $user['created_on']); ?></td>
+				<td>
+					<a href="users.php?form_action=edit&id=<?php echo $user[id];?>">Edit</a> | 
+					<a href="profile.php?id=<?php echo $user[id];?>">Add Profile</a> |
+					<a href="users.php?action=delete&id=<?php echo $user [id];?>">Delete</a> 
+					
+				</td>
 			</tr>
-		<?php
-		}?>
-		
-		
+		<?php $i++; } ?>
+				
 		</table>
+		
+		<hr/>
+		
+		<?php include "form.php"; ?>
+
+		
+		
 
     </div> <!-- /container -->
 

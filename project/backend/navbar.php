@@ -13,10 +13,11 @@
               <li class="active"><a href="index.php">Home</a></li>
               <li><a href="users.php">Users</a></li>
               <li><a href="profile.php">Profiles</a></li>
-			  <li><a href="#">Appointments</a></li>
+			  <li><a href="appointment.php">Appointments</a></li>
               <li><a href="review.php">Reviews</a></li>
-			  <li><a href="#">Contacts</a></li>
-              <li><a href="#">Basic</a></li>
+			  <li><a href="contact.php">Contacts</a></li>
+              <li><a href="#">Subjects</a></li>
+			  <li><a href="#">Levels</a></li>
 
 
             </ul>
