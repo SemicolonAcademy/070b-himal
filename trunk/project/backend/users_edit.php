@@ -1,16 +1,20 @@
 <?php
 	include "config.php";
+	
 	$id=$_GET["id"];
+	
 	$q="select * from users WHERE `users`.`id` = $id";
 	$result=mysql_query($q);
 	$row=mysql_fetch_assoc($result);
 	$imagename=$row["photo"];
+	
 	if (isset($_POST["signup"]))
 	{
 		$id=$_GET["id"];
-		$imagename=$_GET["imagename"];
 		
+		$imagename=$_GET["imagename"];		
 		$dest_del='./uploads/'.$imagename;
+		
 		$src=$_FILES['image']['tmp_name'];
 		$dest='./uploads/'.$_FILES['image']['name'];
 		
@@ -33,6 +37,7 @@
 		$checkbox=$_POST["checkbox"];
 		
 		$now=time();
+		
 		if($src)
 		{
 		unlink ($dest_del);

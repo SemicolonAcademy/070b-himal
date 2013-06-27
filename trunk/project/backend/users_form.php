@@ -9,18 +9,27 @@ if (isset($_POST["signup"]))
 		$src=$_FILES['image']['tmp_name'];
 		$dest='./uploads/'.$_FILES['image']['name'];
 		
-		if(move_uploaded_file($src,$dest))
-		{
-			$filename=$_FILES['image']['name'];
-			}
+		$filename=$_FILES['image']['name'];
+		
+		if($filename == '') {		
+			
+			$eimage= "Porfile image in required.";
+			$error = true;
+			
+		}else {
+			move_uploaded_file($src,$dest);
+		}
+		
+		
 		$pos1=strpos($filename,'.');
 		$image_type=substr($filename,-(strlen($filename)-$pos1)+1);
-		if($image_type=='jpeg'||$image_type=='bmp'||$image_type=='png'||$image_type=='gif')
-			{continue;}
-		else
-		{$eimage="please select the correct image file.The image type is"." ".$image_type;}
+		
+		
+		if($image_type !='jpeg'|| $image_type !='bmp'|| $image_type !='png'|| $image_type !='gif') {
+			$eimage= "Disallowed file type. Please upload jpeg / bmp / png / gif only";
+			$error = true;		
+		}			
 			
-
 		$username=$_POST["username"];
 		$first_name=$_POST["first_name"];
 		$middle_name=$_POST["middle_name"];
@@ -35,33 +44,35 @@ if (isset($_POST["signup"]))
 		
 	
 	
-		if ($username == '')
-			{$eusername = "Enter your name !!";}
+		if ($username == '') {
+			$error = true; $eusername = "Enter your name !!";
+		}
 		if ($email == '')
-			{$eemail="Enter your email !!";}
+			{$error = true;  $eemail="Enter your email !!";}
 		if ($password == '')
-			{$epassword="Enter password !!";}	
+			{$error = true; $epassword="Enter password !!";}	
 		if($password_check!==$password)
-			{$epassword_check="Password does not match !!";}
+			{$error = true;  $epassword_check="Password does not match !!";}
 		if ($gender== '')
-			{$egender="Select a gender !!";}
+			{$error = true;  $egender="Select a gender !!";}
 		if ($first_name=='')
-		 {$efirst_name="enter your first name";}
+		 {$error = true;  $efirst_name="enter your first name";}
 		if ($last_name=='')
-		 {$elast_name="enter your last name";}
+		 {$error = true; $elast_name="enter your last name";}
 		 if ($phone=='')
-		 {$ephone="enter your phone name";}
+		 {$error = true; $ephone="enter your phone name";}
 		 if ($address=='')
-		 {$eaddress="enter your address";}
+		 {$error = true; $eaddress="enter your address";}
 		
 		 
 		if ($checkbox == '')
-			{$echeckbox="Agree to our terms and conditions !!";}
-		$now=time();
-		 $sql = "INSERT INTO `htnepal`.`users` (`id`, `username`,`first_name`,`middle_name`,`last_name`, `password`, `email`, `gender`,`phone`,`address`, `created_on`,`photo`) VALUES (NULL, '$username','$first_name','$middle_name','$last_name','$password', '$email', '$gender','$phone','$address', '$now','$filename')";
-		mysql_query($sql);
-
-		header('Location: users.php');
+			{$error = true; $echeckbox="Agree to our terms and conditions !!";}
+		
+		if (!$error) {
+			$now=time();		
+			$sql = "INSERT INTO `htnepal`.`users` (`id`, `username`,`first_name`,`middle_name`,`last_name`, `password`, `email`, `gender`,`phone`,`address`, `created_on`,`photo`) VALUES (NULL, '$username','$first_name','$middle_name','$last_name','$password', '$email', '$gender','$phone','$address', '$now','$filename')";
+			if (mysql_query($sql)) header('Location: users.php');
+		}
 		
 		
 	
@@ -107,133 +118,7 @@ if (isset($_POST["signup"]))
  <?php include "navbar.php";?>
 
     <div class="container">
- <h3>Add new user</h3>
-		<form class="form-horizontal" action="form.php" method="POST" enctype="multipart/form-data">
-			<div class="control-group">
-				<label class="control-label" >Username</label>
-				<div class="controls">
-					<input type="text"  name="username" value="<?php if ($username) {echo $username;}?>" >
-						<?php if($eusername){ ?>
-						<span class="error"> <?php echo $eusername ;?>	</span>
-					<?php } ?>
-				</div>
-			</div>
-			
-			<div class="control-group">
-				<label class="control-label" >First name</label>
-				<div class="controls">
-					<input type="text"  name="first_name" value="<?php if ($first_name) {echo $first_name;}?>">
-						<?php if($efirst_name){ ?>
-						<span class="error"> <?php echo $efirst_name; ?>	</span>
-					<?php } ?>
-				</div>
-			</div>
-			
-			<div class="control-group">
-				<label class="control-label" >Middle name</label>
-				<div class="controls">
-					<input type="text"  name="middle_name" value="<?php if($middle_name) echo $middlename;?>" >
-				</div>
-			</div>
-			
-			<div class="control-group">
-				<label class="control-label" >Last name</label>
-				<div class="controls">
-					<input type="text"  name="last_name" value="<?php if ($last_name) {echo $last_name;}?>" >
-						<?php if($elast_name){ ?>
-						<span class="error"> <?php echo $elast_name; ?>	</span>
-					<?php } ?>
-				</div>
-			</div>
-				
-			<div class="control-group">
-				<label class="control-label" >Email</label>
-				<div class="controls">
-					<input type="text"  name="email" value="<?php if ($email) {echo $email;}?>">
-						<?php if($eaddress){ ?>
-						<span class="error"> <?php echo $eemail; ?></span>
-					<?php } ?>
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label">Password</label>
-				<div class="controls">
-					<input type="password"  name="password" value="<?php if ($password){echo $password;}?>">
-						<?php if($epassword){ ?>
-						<span class="error"> <?php echo $epassword; ?>	</span>
-					<?php } ?>
-				</div>
-			</div>
-			
-			<div class="control-group">
-				<label class="control-label" >Confirm Password</label>
-				<div class="controls">
-					<input type="password"  name="password_check" value="<?php if ($cofirm_password){echo $password;}?>" >
-						<?php if($ecofirm_password){ ?>
-						<span class="error"> <?php echo $ecofirm_password ;?>	</span>
-					<?php } ?>
-				</div>
-			</div>
-					
-			<div class="control-group">
-				<label class="control-label">Image</label>
-				<div class="controls">
-					<input type="file" name="image">
-						<?php if($eimage){ ?>
-						<span class="error"> <?php echo $eimage; ?>	</span>
-					<?php } ?>
-				</div>
-			</div>
-	
-			
-				<div class="control-group">
-					<label class="control-label" for="gender">Gender:</label>
-					<div class="controls">
-						<input type="radio" name="gender"  value="m" <?php if ($row[gender] == 'm') echo 'checked="checked"' ?>>&nbspMale
-						<input type="radio" name="gender"  value="f" <?php if ($row[gender] == 'f') echo 'checked="checked"' ?>>&nbspFemale
-							<?php if($egender){ ?>
-						<span class="error"> <?php echo $egender; ?>	</span>
-					<?php } ?>
-					</div>
-				</div>
-			
-			<div class="control-group">
-				<label class="control-label" >Phone</label>
-				<div class="controls">
-					<input type="text"  name="phone"  value="<?php if ($phone){echo $phone;}?>" >
-						<?php if($ephone){ ?>
-						<span class="error"> <?php echo $ephone ?>	</span>
-					<?php } ?>
-					
-				</div>
-			</div>
-				
-			<div class="control-group">
-				<label class="control-label" >Address</label>
-				<div class="controls">
-					<input type="text"  name="address" value="<?php if ($address){echo $first_name;}?>" >
-					<span class="help-inline">
-					<?php if($eaddress){ ?>
-						<span class="error"> <?php echo $eaddress ?>	</span>
-					<?php } ?>
-
-				</div>
-			</div>
-		
-			<div class="control-group">
-			<div class="controls">
-				<label class="checkbox">
-					<input type="checkbox" name="checkbox" <?php if ($checkbox) echo 'checked="checked"' ?>> I agree to the terms and conditions.
-					<span class="help-inline">
-					<?php if($echeckbox){ ?>
-						<span class="error"> <?php echo $echeckbox; ?>	</span>
-					<?php } ?>
-				</label>
-			<button type="submit" class="btn btn-success" name="signup">Sign up</button>
-			</div>
-			</div>
-		</form>
-
+		<?php include "form.php"; ?>
     </div> <!-- /container -->
 
     <!-- Le javascript
