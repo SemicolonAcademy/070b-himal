@@ -1,4 +1,3 @@
-
    <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -16,8 +15,8 @@
 			  <li><a href="appointment.php">Appointments</a></li>
               <li><a href="review.php">Reviews</a></li>
 			  <li><a href="contact.php">Contacts</a></li>
-              <li><a href="#">Subjects</a></li>
-			  <li><a href="#">Levels</a></li>
+              <li><a href="subjects.php">Subjects</a></li>
+			  <li><a href="levels.php">Levels</a></li>
 
 
             </ul>
