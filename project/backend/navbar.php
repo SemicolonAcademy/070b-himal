@@ -14,7 +14,7 @@
               <li><a href="users.php">Users</a></li>
               <li><a href="profile.php">Profiles</a></li>
 			  <li><a href="#">Appointments</a></li>
-              <li><a href="#">Reviews</a></li>
+              <li><a href="review.php">Reviews</a></li>
 			  <li><a href="#">Contacts</a></li>
               <li><a href="#">Basic</a></li>
 
