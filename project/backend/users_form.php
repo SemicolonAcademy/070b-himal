@@ -1,7 +1,5 @@
 <?php
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
-	mysql_connect("localhost","root","");
-	mysql_select_db("htnepal");
+        include "config.php";
 	$q="select * from users";
 	$result=mysql_query($q);	
 	
