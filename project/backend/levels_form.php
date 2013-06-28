@@ -1,8 +1,8 @@
-
-	<h3>Levels </h3>                
-
-
-
+<?php if ($form_action == "edit") { ?>
+	<h3>Edit Levels </h3>                
+<?php } else { ?>
+	<h3>Add Levels</h3>                
+<?php } ?>
 <form class="form-horizontal" method ="POST" action="" enctype="multipart/form-data">
 
 
@@ -19,6 +19,7 @@
 					<span class="help-inline"><?php echo $errors['id'];?></span>
 			<?php } ?>
 		  </div>
+		  <br/>
 		   <label class="control-label" for="inputFirstName">Name</label>
 		  <div class="controls">
 			<input type="text" name="name" value="<?php if( isset($form_values['name'])) echo $form_values['name']; ?>" />
@@ -38,6 +39,7 @@
 			
 			
 		</div>
+		<br/>
 		<div class="control-group">
 		  <label class="control-label" for="inputPhone">Description</label>
 		  <div class="controls">
