@@ -12,6 +12,13 @@
 
 
 		<div class="control-group">
+		 <label class="control-label" for="inputFirstName">Id</label>
+		  <div class="controls">
+			<input type="text" name="slug" value="<?php if( isset($form_values['id'])) echo $form_values['id']; ?>" />
+			<?php if( isset($errors['id'])){ ?>
+					<span class="help-inline"><?php echo $errors['id'];?></span>
+			<?php } ?>
+		  </div>
 		  <label class="control-label" for="inputUserId">Name</label>
 		  <div class="controls">
 			<select>
@@ -34,7 +41,8 @@
 			<?php if( isset($errors['slug'])){ ?>
 					<span class="help-inline"><?php echo $errors['slug'];?></span>
 			<?php } ?>
-		  </div>
+			
+			
 		</div>
 		<div class="control-group">
 		  <label class="control-label" for="inputPhone">Description</label>
