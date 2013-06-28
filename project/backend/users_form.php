@@ -93,10 +93,8 @@ if (isset($_POST["signup"]))
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
-	  input value
-	  {color:#ff0000;}
-	   .error
-	  {color:#ff0000;}
+	  input value   {color:#ff0000;}
+	   .error  {color:#ff0000;}
     </style>
     <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 
