@@ -19,20 +19,14 @@
 					<span class="help-inline"><?php echo $errors['id'];?></span>
 			<?php } ?>
 		  </div>
-		  <label class="control-label" for="inputUserId">Name</label>
+		   <label class="control-label" for="inputFirstName">Name</label>
 		  <div class="controls">
-			<select>
-				<option>Select Student's Grade</option>
-				<option>Kids</option>
-				<option>Primary (1-5)</option>
-				<option>Lower Secondary (5-8)</option>
-				<option>Secondary (9-10)</option>
-				<option>+2</option>
-			</select>
-			<?php if( isset($errors['name'])){ ?>
-					<span class="help-inline"><?php echo $errors['name'] ;?></span>
+			<input type="text" name="name" value="<?php if( isset($form_values['name'])) echo $form_values['name']; ?>" />
+			<?php if( isset($errors['id'])){ ?>
+					<span class="help-inline"><?php echo $errors['name'];?></span>
 			<?php } ?>
 		  </div>
+		  
 		</div>
 		<div class="control-group">
 		  <label class="control-label" for="inputFirstName">Slug</label>
