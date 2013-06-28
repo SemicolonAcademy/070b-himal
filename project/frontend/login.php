@@ -99,9 +99,9 @@
     <legend>Home Tution Nepal Login</legend>
     <label>Username</label>
 
-    <input type="text" >
-	 <label>password</label>
-	<input type="text" ><br/>
+    <input type="text" name="login">
+	 <label>Password</label>
+	<input type="password" name="password"><br/>
     <button type="submit" class="btn">Login</button>
   </fieldset>
 </form>
