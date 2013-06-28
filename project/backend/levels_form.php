@@ -12,13 +12,7 @@
 
 
 		<div class="control-group">
-		 <label class="control-label" for="inputFirstName">Id</label>
-		  <div class="controls">
-			<input type="text" name="slug" value="<?php if( isset($form_values['id'])) echo $form_values['id']; ?>" />
-			<?php if( isset($errors['id'])){ ?>
-					<span class="help-inline"><?php echo $errors['id'];?></span>
-			<?php } ?>
-		  </div>
+		
 		  <br/>
 		   <label class="control-label" for="inputFirstName">Name</label>
 		  <div class="controls">
