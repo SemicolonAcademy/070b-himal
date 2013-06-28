@@ -80,6 +80,56 @@
    <?php include "navbar.php";?>
 
     <div class="container">
+	<table class="table table-hover">
+<tr>
+<td>User ID</td>
+<td>Permanent Address </td>
+<td>Temporary Address</td>
+<td>Biodata</td>
+<td>Age</td>
+<td>Phone No</td>
+<td>Teaching City</td>
+<td>Teaching Location</td>
+<td>Qualification</td>
+<td>Teaching Experience</td>
+<td>Max No.of student</td>
+<td>Expected Fee</td>
+<td>Available shift</td>
+<td>Available Time Sloat</td>
+
+
+</tr>
+<?php
+//`userid`, `bio`, `age`, `permanent_address`, `temp_address`, `teaching_city`, `teaching_location`, `teacher_qualification`, `teaching_experience`, `experience_years`, `max_students`, `expected_fee`, `available_shift`, `available_timeslot`, `created_at`) 
+while($row=mysql_fetch_assoc($result))  // rows are in a loop .. row by row so take each row at one time
+{  
+   ?> 
+	<tr>
+	<td><?php echo $row['userid']; ?></td> 
+	<td><?php echo $row['bio']; ?></td>
+	<td><?php echo $row['age']; ?></td>
+	<td><?php echo $row['permanent_address']; ?></td>
+	<td><?php echo $row['temp_address']; ?></td>
+	<td><?php echo $row['teaching_city']; ?></td>
+	<td><?php echo $row['teaching_location']; ?></td>
+	<td><?php echo $row['teacher_qualification']; ?></td>
+	<td><?php echo $row['teaching_experience']; ?></td>
+	<td><?php echo $row['experience_years']; ?></td>
+	<td><?php echo $row['max_students']; ?></td>
+	<td><?php echo $row['expected_fee']; ?></td>
+	<td><?php echo $row['available_shift']; ?></td>
+	<td><?php echo $row['available_timeslot']; ?></td>
+	<td><?php echo $row['created_at']; ?></td>
+	
+	<td>
+		<a href="user_action.php?action=edit&id=<?php echo $row['id']; ?>">Edit</a> - <a href="internetLab.php?action=delete&id=<?php echo $row['id']; ?>">Delete</a></td>
+	</td>
+	
+   </tr>
+<?php } ?>
+
+</table>
+
 
      
 	           <!-- <h3 align="right"> <a  href="profile_edit.php >Edite Profile</a></h3>-->
