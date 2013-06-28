@@ -32,7 +32,8 @@
 		         
 		  }
    
-
+                     $select="select * from profiles";
+		             $fetch=mysql_query( $select);
 
 
 ?>
@@ -82,27 +83,28 @@
     <div class="container">
 	<table class="table table-hover">
 <tr>
-<td>User ID</td>
-<td>Permanent Address </td>
-<td>Temporary Address</td>
-<td>Biodata</td>
-<td>Age</td>
-<td>Phone No</td>
-<td>Teaching City</td>
-<td>Teaching Location</td>
-<td>Qualification</td>
-<td>Teaching Experience</td>
-<td>Max No.of student</td>
-<td>Expected Fee</td>
-<td>Available shift</td>
-<td>Available Time Sloat</td>
+<th>User ID</th>
+<th>Biodata</th>
+<th>Age</th>
+<th>Permanent Address </th>
+<th>Temporary Address</th>
+<th>Teaching City</th>
+<th>Teaching Location</th>
+<th>Qualification</th>
+<th>Teaching Experience</th>
+<th> Experience Year</th>
+<th>Max No.of student</th>
+<th>Expected Fee</th>
+<th>Available shift</th>
+<th>Available Time Sloat</th>
+<th>Created At</th>
 
 
 </tr>
 <?php
-//`userid`, `bio`, `age`, `permanent_address`, `temp_address`, `teaching_city`, `teaching_location`, `teacher_qualification`, `teaching_experience`, `experience_years`, `max_students`, `expected_fee`, `available_shift`, `available_timeslot`, `created_at`) 
-while($row=mysql_fetch_assoc($result))  // rows are in a loop .. row by row so take each row at one time
-{  
+          
+ while($row=mysql_fetch_assoc( $fetch))  // Dispaly the profile data on table
+ {  
    ?> 
 	<tr>
 	<td><?php echo $row['userid']; ?></td> 
@@ -110,7 +112,7 @@ while($row=mysql_fetch_assoc($result))  // rows are in a loop .. row by row so t
 	<td><?php echo $row['age']; ?></td>
 	<td><?php echo $row['permanent_address']; ?></td>
 	<td><?php echo $row['temp_address']; ?></td>
-	<td><?php echo $row['teaching_city']; ?></td>
+    <td><?php echo $row['teaching_city']; ?></td>
 	<td><?php echo $row['teaching_location']; ?></td>
 	<td><?php echo $row['teacher_qualification']; ?></td>
 	<td><?php echo $row['teaching_experience']; ?></td>
@@ -121,15 +123,15 @@ while($row=mysql_fetch_assoc($result))  // rows are in a loop .. row by row so t
 	<td><?php echo $row['available_timeslot']; ?></td>
 	<td><?php echo $row['created_at']; ?></td>
 	
-	<td>
-		<a href="user_action.php?action=edit&id=<?php echo $row['id']; ?>">Edit</a> - <a href="internetLab.php?action=delete&id=<?php echo $row['id']; ?>">Delete</a></td>
-	</td>
+	<!--<td>
+		<a href="user_action.php?action=edit&id=<?php//echo $row['id']; ?>">Edit</a> - <a href="internetLab.php?action=delete&id=<?php //echo $row['id']; ?>">Delete</a></td>
+	</td>-->
 	
    </tr>
 <?php } ?>
 
 </table>
-
+	<hr/>
 
      
 	           <!-- <h3 align="right"> <a  href="profile_edit.php >Edite Profile</a></h3>-->
@@ -175,12 +177,7 @@ while($row=mysql_fetch_assoc($result))  // rows are in a loop .. row by row so t
 							        </div>
 					      </div>
 							
-							    <div class="control-group">
-                                        <label class="control-label" for="inputEmail">Phone No :</label>
-                                     <div class="controls">
-                                            <input type="text" id="inputPhone" name="phone" required>
-                                     </div>
-                          </div>
+							   
 							
 							     <div class="control-group">
 						                <label class="control-label" for="inputAddress" required>Teaching City :</label>
