@@ -62,14 +62,55 @@
 	
     <div class="container">
 
-      <h1>Home Tuition Nepal</h1>
-      <p></p>
-	  
-	  <hr>
 	  <div class="bs-docs-example">
-            <h3>Contacts</h3>
+		<a href="<?php echo $self_url; ?>"><h3>Contacts</h3></a>
         
           </div>
+		  	  
+		<?php 
+     	
+		   $sel="SELECT * FROM contact";
+		   $result=mysql_query($sel);
+		   if ($row = mysql_fetch_array($result)){
+		   ?>
+		  
+		  <div class="bs-docs-example">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Phone Number</th>
+				  <th>Email</th>
+                  <th>Message</th>
+				  <th>Created On</th>
+				<!--  <th>Passwod</th>-->
+                </tr>
+              </thead>
+	      <?php
+		   do{ 
+		   ?>
+              <tbody>
+                <tr>
+				  <td><?php echo $row['id'] ?></td> 
+                  <td><?php echo $row['name'] ?></td>
+                  <td><?php echo $row['phone'] ?></td>
+                  <td><?php echo $row['email'] ?></td>
+				  <td><?php echo $row['message'] ?></td>
+				  <td><?php echo $row['created_at'] ?></td>
+				  <th><a href="contact_edit.php?action=edit&id=<?php echo $row['id']; ?>">Edit</a> / <a href="contact.php?action=delete&id=<?php echo $row['id']; ?> ">Delete</a></th>
+                </tr>
+              </tbody>
+			  <?php }while($row=mysql_fetch_array($result));
+			  }
+			  else{
+			     echo "Sorry ! no records are found." ;
+			  }
+			  ?>
+            </table>
+			<hr>
+          </div>
+		  
 		  
 		  <form class="bs-docs-example form-horizontal" method ="POST" action="contact.php" enctype="multipart/form-data">
             <div class="control-group">
@@ -112,51 +153,8 @@
             </div>
           </form>
 		  
-		  <hr size="3" width="100%"color="red">
-		  
-		<?php 
-       //    if(isset($_POST['signin'])){	
-		   $sel="SELECT * FROM contact";
-		   $result=mysql_query($sel);
-		   if ($row = mysql_fetch_array($result)){
-		   ?>
-		  
-		  <div class="bs-docs-example">
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Phone Number</th>
-				  <th>Email</th>
-                  <th>Message</th>
-				  <th>Created On</th>
-				<!--  <th>Passwod</th>-->
-                </tr>
-              </thead>
-	      <?php
-		   do{ 
-		   ?>
-              <tbody>
-                <tr>
-				  <td><?php echo $row['id'] ?></td> 
-                  <td><?php echo $row['name'] ?></td>
-                  <td><?php echo $row['phone'] ?></td>
-                  <td><?php echo $row['email'] ?></td>
-				  <td><?php echo $row['message'] ?></td>
-				  <td><?php echo $row['created_at'] ?></td>
-				  <th><a href="contact_edit.php?action=edit&id=<?php echo $row['id']; ?>">Edit</a> / <a href="contact.php?action=delete&id=<?php echo $row['id']; ?> ">Delete</a></th>
-                </tr>
-              </tbody>
-			  <?php }while($row=mysql_fetch_array($result));
-			  }
-			  else{
-			     echo "Sorry ! no records are found." ;
-			  }
-			  ?>
-            </table>
-          </div>
-		  
+	
+	
 
     </div> <!-- /container -->
 
