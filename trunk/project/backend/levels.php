@@ -153,7 +153,7 @@
 
     <div class="container">
 
-	<a href="<?php echo $self_url; ?>"><h3>Subjects</h3></a>
+	<a href="<?php echo $self_url; ?>"><h3>Levels</h3></a>
 	
 	<?php if(mysql_num_rows($all_result)) { ?>
 	
@@ -172,8 +172,8 @@
 				<td><?php echo $single_row['slug']; ?></td>
 				<td><?php echo $single_row['description']; ?></td>				
 				<td>
-					<a href="subjects.php?form_action=edit&id=<?php echo $single_row['id'];?>">Edit</a> | 					
-					<a href="subjects.php?form_action=delete&id=<?php echo $single_row ['id'];?>">Delete</a> 
+					<a href="levels.php?form_action=edit&id=<?php echo $single_row['id'];?>">Edit</a> | 					
+					<a href="levels.php?form_action=delete&id=<?php echo $single_row ['id'];?>">Delete</a> 
 					
 				</td>
 			</tr>
@@ -187,7 +187,7 @@
 		
 		<hr/>
 		
-		<?php include "subjects_form.php"; ?>
+		<?php include "levels_form.php"; ?>
 
 		
     </div> <!-- /container -->
