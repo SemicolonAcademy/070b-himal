@@ -17,7 +17,7 @@
 		   <label class="control-label" for="inputFirstName">Name</label>
 		  <div class="controls">
 			<input type="text" name="name" value="<?php if( isset($form_values['name'])) echo $form_values['name']; ?>" />
-			<?php if( isset($errors['id'])){ ?>
+			<?php if( isset($errors['name'])){ ?>
 					<span class="help-inline"><?php echo $errors['name'];?></span>
 			<?php } ?>
 		  </div>
