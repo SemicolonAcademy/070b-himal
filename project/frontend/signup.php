@@ -517,31 +517,7 @@
 		<input type="submit" name="sign_in">
 		
       <hr>
-      <table class="table table-hover">
-	  <?php
-	  mysql_connect ("localhost","root","");
-	  mysql_select_db("teacher");
-	  $q = "select * from personal";
-	  $result = mysql_query($q);
-	  ?>
-	  <?php
-	  $col=mysql_num_rows($result);
-	 while ($row = mysql_fetch_assoc($result))
-	 {
-	  ?>
-	  <tr>
-		<td> <?php echo $row['id']; ?></td>
-		<td> <?php echo $row['FirstName']; ?></td>
-		<td> <?php echo $row['MiddleName']; ?></td>
-		<td> <?php echo $row['LastName']; ?></td>
-		<td> <?php echo $row['Email']; ?></td>
-		<td> <?php echo $row['Username']; ?></td>
-		<td> <?php echo $row['Gender']; ?></td>
-		<td> <?php echo $row['Age']; ?></td>
-		
-	 </tr>
-	 <?php } ?>
-	  </table>
+     
 	   <hr>
       <div class="footer text-center">
 		
