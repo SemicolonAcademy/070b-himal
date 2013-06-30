@@ -1,6 +1,6 @@
 <?php	
 	session_start();
-	if($_SESSION['logged_in'])	header("location: index.php");
+	if(isset($_SESSION['logged_in']))	header("location: index.php");
 	
 	error_reporting(E_ERROR | E_WARNING | E_PARSE);	
 	mysql_connect("localhost","root","");
