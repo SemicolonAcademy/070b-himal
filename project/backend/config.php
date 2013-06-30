@@ -1,4 +1,7 @@
 <?php
+	session_start();
+	if(!$_SESSION['logged_in'])
+	header("location: login.php");
 	
 	error_reporting(E_ERROR | E_WARNING | E_PARSE);	
 	mysql_connect("localhost","root","");
@@ -13,6 +16,7 @@
 	
 	$protocol = $_SERVER['HTTPS'] == '' ? 'http://' : 'https://';	
 	$self_url = $protocol . $_SERVER['HTTP_HOST']. $_SERVER['REQUEST_URI']; 	
+	
 	
 	
 	
