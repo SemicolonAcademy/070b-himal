@@ -1,5 +1,8 @@
+<?php	   
+            if(defined('WEB_ROOT')){ ?> 
+
 <h3>Add new user</h3>
-				
+		
 		<form class="form-horizontal" action="users.php?form_action=<?php echo $form_action?>" method="POST" enctype="multipart/form-data">
 				
 				<?php if ($form_action == "edit") { ?>
@@ -131,3 +134,5 @@
 			</div>
 			</div>
 		</form>
+		
+	<?php	}else header("location:login.php");?>

@@ -1,3 +1,6 @@
+<?php	
+            if(defined('WEB_ROOT')){ ?> 
+
 <h3>Add Profiles</h3>
 				
 		<form class="form-horizontal" action="profile.php?form_action=<?php echo $form_action?>" method="POST" enctype="multipart/form-data">
@@ -192,3 +195,4 @@
 			</div>
 			</div>
 		</form>
+			<?php	}else header("location:login.php");?>
