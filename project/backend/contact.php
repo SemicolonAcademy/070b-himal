@@ -119,29 +119,19 @@
     <?php include "navbar.php";?>
 	
     <div class="container">
-
-<<<<<<< .mine
-      	  
-	 
-=======
->>>>>>> .r52
 	  <div class="bs-docs-example">
-<<<<<<< .mine
             <a href="<?php echo $self_url; ?>"><h3>Contacts</h3></a> 
 	   <hr>		  
 		<?php 	
-=======
+
 		<a href="<?php echo $self_url; ?>"><h3>Contacts</h3></a>
-        
           </div>
 		  	  
 		<?php 
-     	
->>>>>>> .r52
 		   $sel="SELECT * FROM contact";
 		   $result=mysql_query($sel);
 		   if ($row = mysql_fetch_array($result)){
-		     $i=1;
+		   $i=1;
 		   ?>
 		  
 		  <div class="bs-docs-example">
@@ -182,64 +172,9 @@
 			  }
 			  ?>
             </table>
-<<<<<<< .mine
 			<hr>
-		  
 		  <?php include"contact_form.php"; ?>
-=======
-			<hr>
->>>>>>> .r52
-          </div>
-		  
-<<<<<<< .mine
-		  
-=======
-		  
-		  <form class="bs-docs-example form-horizontal" method ="POST" action="contact.php" enctype="multipart/form-data">
-            <div class="control-group">
-              <label class="control-label" for="inputFirstName">Name</label>
-              <div class="controls">
-                <input type="text" name="Name" id="inputName" >
-				<?php if($ename){ ?>
-						<span class="help-inline"><?php echo $ename ;?></span>
-				<?php } ?>
-              </div>
-            </div>
-			<div class="control-group">
-              <label class="control-label" for="inputPhone">Phone</label>
-              <div class="controls">
-                <input type="text" name="Phone" id="inputPhone" >
-				<?php if($ephone){ ?>
-						<span class="error"> <?php echo $ephone ;?>	</span>
-				<?php } ?>
-              </div>
-            </div>
-			<div class="control-group">
-              <label class="control-label" for="inputEmail">Email</label>
-              <div class="controls">
-                <input type="text" name="Email" id="inputEmail">
-				<?php if($eemail){ ?>
-						<span class="error"> <?php echo $eemail ;?>	</span>
-				<?php } ?>
-              </div>
-            </div>
-			<div class="control-group">
-              <label class="control-label" for="inputMessage">Message</label>
-              <div class="controls">
-                <textarea rows="4" name="Message" ></textarea>
-              </div>
-            </div>
-            <div class="control-group">
-              <div class="controls">
-                <button type="submit" name="signin" class="btn btn-success">Sign In</button>              
-				</div>
-            </div>
-          </form>
-		  
-	
-	
->>>>>>> .r52
-
+          </div>    
 
     </div> <!-- /container -->
 

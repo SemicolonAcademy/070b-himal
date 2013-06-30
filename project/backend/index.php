@@ -1,7 +1,8 @@
 <?php
-	 include "config.php";
+	include "config.php";
 	$q="select * from users";
 	$result=mysql_query($q);	
+	
 	
 if (isset($_POST["signup"]))
 {
