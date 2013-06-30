@@ -11,8 +11,8 @@
 if(isset($_POST['submit']))
 {    
     $table = "users";
-	$password=$_POST["password"];
-	$email=$_POST["email"];
+	$password=aadslashes($_POST["password"]);
+	$email=addslashes($_POST["email"]);
     		
 	if ($email == '') {				
 		$err .= "Email address required ! <br/>";
