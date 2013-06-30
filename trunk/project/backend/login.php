@@ -1,13 +1,51 @@
-<?php
-include "config.php";
-$email='';
+<?php	
+	session_start();
+	if($_SESSION['logged_in'])	header("location: index.php");
+	
+	error_reporting(E_ERROR | E_WARNING | E_PARSE);	
+	mysql_connect("localhost","root","");
+	mysql_select_db("htnepal");
+	
+	
+
 if(isset($_POST['submit']))
-{
+{    
     $table = "users";
 	$password=$_POST["password"];
 	$email=$_POST["email"];
-	$query = "select password from `{$table}` where `email`='{$email}' and `password`='{$password}' ";
-	$result = mysql_query($query);
+    		
+	if ($email == '') {				
+		$err .= "Email address required ! <br/>";
+	}
+	if ($password == '') {
+		$err .= "Password is required! <br/>";
+	}		
+   
+	if ($email !="" && $password != "") {
+		$query = "select * from `{$table}` where `email`='{$email}' and `password`='{$password}' ";
+		$result = mysql_query($query);
+		
+		if($result && mysql_num_rows($result)) {
+			
+			//login success
+			$user = mysql_fetch_assoc($result);
+			
+			//echo "<pre>"; print_r($user); echo "<pre>";
+			
+			$_SESSION['logged_in'] = 1;
+			$_SESSION['user_id'] = $user['id'];
+			$_SESSION['email'] = $email;
+			
+			//echo "<pre>"; print_r($_SESSION); echo "<pre>";
+			
+			header ("Location: index.php");
+			
+		}else {
+		
+			$err .="Incorrect Email or Password ! <br/>";
+		}
+	}
+
 	
 }
 
@@ -16,7 +54,7 @@ if(isset($_POST['submit']))
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Home Tuition Nepal</title>
+    <title>Login - Home Tuition Nepal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -114,34 +152,16 @@ if(isset($_POST['submit']))
     <label>Email</label>
 
     <input type="text" name="email" value="<?php echo "$email" ?>" />
+	
 	 <label>Password</label>
 	<input type="password" name="password" /><br/>
     <input type="submit" class="btn" value="Login" name="submit"/>
 	<br/><br/>			
-						<?php
-					if(isset($_POST['submit']))
-					{
-						
-						if($result && mysql_num_rows($result))
-						{
-						?>
-						<div class="alert alert-success">
-						Login sucessful !
-						</div>
-					<?php
-						}
-						else
-						{
-						?>
-						<div class="alert alert-error">
-						Incorrect Email or Password !
-						</div>
-						<?php
-						}
-						
-					}
-
-					?>
+						<?php if(isset($err)) { ?>
+							<div class="alert alert-error">
+								<?php echo $err; ?>
+							</div>
+						<?php } ?>
 	
   </fieldset>
   

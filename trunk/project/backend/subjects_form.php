@@ -1,3 +1,5 @@
+<?php if ( ! defined("WEB_ROOT") ) die( "Direct file access not allowedd");  ?>
+
 <?php if ($form_action == "edit") { ?>
 	<h3>Edit Subject </h3>                
 <?php } else { ?>
