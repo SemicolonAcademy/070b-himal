@@ -105,11 +105,11 @@
 			*/
 		
 	
-			if ($username == '') {
+            if ($username ==  '') {
 				$error = true; $eusername = "Enter your name !!";
 			}
-			if ($email == '') {
-				$error = true;  $eemail="Enter your email !!";
+			 if(preg_match("/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/", $_POST["email"]) === 0) {
+				$error = true;  $eemail="Enter your email correctly !!";
 			}
 			if ($password == ''){
 				$error = true; $epassword="Enter password !!";
@@ -121,15 +121,15 @@
 			if ($gender== '') { 
 				$error = true;  $egender="Select a gender !!";
 			}
-			if ($first_name=='') {
-				$error = true;  $efirst_name="enter your first name";
+			if (preg_match("/^[a-zA-Z -]+$/", $_POST['first_name']) ==  0) {
+				$error = true;  $efirst_name="enter your first name correctly !!";
 			}
-			if ($last_name=='') {
-				$error = true; $elast_name="enter your last name";
+		    if (preg_match("/^[a-zA-Z -]+$/", $_POST['last_name']) ==  0) {
+				$error = true; $elast_name="enter your last name correctly !! ";
 			}
 			
-			if ($phone=='') { 
-				$error = true; $ephone="enter your phone name";
+			if (preg_match("/^[+0-9]{7,14}$/", $_POST['phone']) ==  0) { 
+				$error = true; $ephone="enter your phone name correctly !!";
 			}
 			
 			if ($address==''){
