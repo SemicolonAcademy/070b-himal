@@ -83,13 +83,13 @@
 		
 	
 			if (preg_match("/^[0-9]+$/", $_POST['uid']) ==  0) {
-				$error = true; $euserid = "Enter your ID !!";
+				$error = true; $euserid = "Enter your ID correctly!!";
 			}
 			if ($bio == '') {
 				$error = true;  $ebio="Enter your biodata !!";
 			}
-			if ($age == ''){
-				$error = true; $eage="Enter your age !!";
+			if (preg_match("/^[0-9]{1,3}+$/", $_POST['age']) ==  0){
+				$error = true; $eage="Enter your age correctly !!";
 			}	
 			
 			if ($paddress=='') {
@@ -112,7 +112,7 @@
 			if ($experience==''){
 				$error = true; 		$eexperience="enter your experience";
 			}
-			if ($fee==''){
+			if (preg_match("/^[0-9.]+$/", $_POST['fee']) ==  0){
 				$error = true; 	$efee="enter Expected Fee";
 			}
 			
@@ -133,14 +133,14 @@
 					$id=$_POST['id'];
 					
 					
-					$sql = "UPDATE `profiles` SET `userid`=  '{$userid}', `bio`=' {$bio}', `age`=' {$age}', `permanent_address`=' {$paddress}', `temp_address`=' {$taddress}', `teaching_city`=' {$city }', `teaching_location`=' {$location}', `teacher_qualification`='{ $qualification}', `teaching_experience`=' {$experience}', `experience_years`='{$experiyence_year}', `max_students`=' {$no_student}', `expected_fee`=' {$fee}', `available_shift`=' {$shift}', `available_timeslot`=' { $timeslot}', `created_at`=' { $time}' WHERE `profiles`.`id` = $id LIMIT 1;";
+					$sql = "UPDATE `profiles` SET `userid`=  '{$userid}', `bio`=' {$bio}', `age`=' {$age}', `permanent_address`='{$paddress}', `temp_address`='{$taddress}', `teaching_city`=' {$city}', `teaching_location`=' {$location}', `teacher_qualification`='{$qualification}', `teaching_experience`=' {$experience}', `experience_years`='{$experiyence_year}', `max_students`=' {$no_student}', `expected_fee`=' {$fee}', `available_shift`=' {$shift}', `available_timeslot`=' {$timeslot}', `created_at`=' {$time}' WHERE `profiles`.`id` = $id LIMIT 1;";
 					
 				
 				} else {			
 
 					echo $sql = "INSERT INTO `profiles` 
 			       ( `userid`, `bio`, `age`, `permanent_address`, `temp_address`, `teaching_city`, `teaching_location`, `teacher_qualification`, `teaching_experience`, `experience_years`, `max_students`, `expected_fee`, `available_shift`, `available_timeslot`, `created_at`) 
-			  VALUES ( ' {$userid}', ' {$bio}', '{$age}', '{ $paddress}', ' { $taddress}', '{$city}', '  {$location}', ' {$qualification}', '  {$experience}', '{   $experiyence_year}', ' {$no_student}', ' {$fee}', ' {$shift}', '{ $timeslot}', ' {$time}')";
+			  VALUES ( ' {$userid}', ' {$bio}', '{$age}', '{$paddress}', ' {$taddress}', '{$city}', '  {$location}', ' {$qualification}', '  {$experience}', '{$experiyence_year}', ' {$no_student}', ' {$fee}', ' {$shift}', '{$timeslot}', ' {$time}')";
 					
 
 				}
