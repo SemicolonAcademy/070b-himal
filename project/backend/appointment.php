@@ -19,7 +19,7 @@
 			 if (preg_match("/^[a-zA-Z -]+$/", $_POST["name"]) ==  0){
 					$err['name'] = "   Enter name correctly !!";
 					}
-			 if (preg_match("/^[0-9]{7,10}$/", $_POST["phone"]) ==  0){
+			 if (preg_match("/^[+0-9]{7,13}$/", $_POST["phone"]) ==  0){
 					$err['phone'] = "   Enter seven to ten digit phone number !!";
 					}
 			 if(preg_match("/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/", $_POST["email"]) === 0){
