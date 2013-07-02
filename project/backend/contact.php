@@ -9,13 +9,13 @@
 	 $err=array();
 	 /*------------------------From Validation-------------------------------*/
 	 function validation(){
-			  if (preg_match("/^[a-zA-Z -]+$/", $_POST['Name']) ==  0){
+			  if (preg_match("/^[a-zA-Z -]+$/", $_POST['name']) ==  0){
 					$error['name']= "   Enter name properly !!";
 				}
-			 if (preg_match("/^[0-9]{7,10}$/", $_POST['Phone']) ==  0){
+			 if (preg_match("/^[0-9]{7,10}$/", $_POST['phone']) ==  0){
 					$error['phone'] = "   Enter seven to ten digit phone number !!";
 				}
-			 if(preg_match("/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/", $_POST["Email"]) === 0){
+			 if(preg_match("/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/", $_POST["email"]) === 0){
 					$error['email']=" Enter email correctly !!";
 				}	
              return $error;
@@ -34,14 +34,14 @@
 	    }
      
      /*-----------------------Editing particular contact---------------------*/
-	 
+
 	  if(isset($_POST['submit_edit'])){
 	        $id=$_POST['id'];
 	        $err  = validation();
 			
 			if (empty($err)) {
-					$sql="UPDATE contact SET `name`='{$_POST['Name']}',`phone`='{$_POST['Phone']}',`email`='{$_POST['Email']}',
-			                        `message`='{$_POST['Message']}',`created_at`='{$time}' WHERE `id`='{$id}'";
+					$sql="UPDATE contact SET `name`='{$_POST['name']}',`phone`='{$_POST['phone']}',`email`='{$_POST['email']}',
+			                        `message`='{$_POST['message']}',`created_at`='{$time}' WHERE `id`='{$id}'";
                     mysql_query($sql);
 					header("location: $self");
                    					
@@ -60,12 +60,15 @@
 	  if(isset($_POST['submit_insert'])){
 		    if(!$err = validation()){
 					 $sql="INSERT INTO `contact`(`name`,`phone`,`email`,`message`,`created_at`) VALUES 
-					      ('{$_POST['Name']}','{$_POST['Phone']}','{$_POST['Email']}','{$_POST['Message']}','{$time}')";
+					      ('{$_POST['name']}','{$_POST['phone']}','{$_POST['email']}','{$_POST['message']}','{$time}')";
 					 $result=mysql_query($sql);         //send sql line to mysql server to be processed and return the result to result variable.
 					 header("location: $self");	
 			}
 			else {
 				$form_values = $_POST;
+			/*	echo "<pre>";
+				print_r($form_values);
+				echo "</pre>"; */
 			}
 		}     
  	
