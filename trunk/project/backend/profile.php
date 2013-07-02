@@ -1,5 +1,5 @@
 <?php
-	include "config.php";
+   	include "config.php";
 	
 	$action = $_GET['action'];
 	$form_action = (isset($_GET['form_action'])) ? $_GET['form_action'] : "insert";
@@ -29,21 +29,21 @@
 			$edit_user = mysql_query($get_user_details_query);			
 			$user_data = mysql_fetch_assoc($edit_user);
 			
-			$userid = $_POST['uid'];
-            $bio = $_POST['bio'];
-			$age = $_POST['age'];
-			$paddress = $_POST['paddress'];
-			$taddress = $_POST['taddress'];
+			$userid = $user_data['userid'];
+            $bio = $user_data['bio'];
+			$age = $user_data['age'];
+			$paddress = $user_data['permanent_address'];
+			$taddress = $user_data['temp_address'];
        
-			$city = $_POST['city'];
-			$location = $_POST['tlocation'];
-			$qualification = $_POST['qualification'];
-			$experience = $_POST['experience'];
-			$experiyence_year=$_POST['experiyence_year'];
-			$no_student = $_POST['no_student'];
-			$shift = $_POST['shift'];
-			$timeslot = $_POST['time'];
-			$fee = $_POST['fee'];
+			$city = $user_data['teaching_city'];
+			$location = $user_data['teaching_location'];
+			$qualification = $user_data['teacher_qualification'];
+			$experience = $user_data['teaching_experience'];
+			$experiyence_year=$user_data['experiyence_years'];
+			$no_student = $user_data['max_students'];
+			$shift = $user_data['available_shift'];
+			$timeslot = $user_data['available_time'];
+			$fee = $user_data['expected_fee'];
 		 
 	
 	}
@@ -82,7 +82,7 @@
 			*/
 		
 	
-			if ($userid == '') {
+			if (preg_match("/^[0-9]+$/", $_POST['uid']) ==  0) {
 				$error = true; $euserid = "Enter your ID !!";
 			}
 			if ($bio == '') {
@@ -133,14 +133,14 @@
 					$id=$_POST['id'];
 					
 					
-					$sql = "UPDATE `profiles` SET `userid`=  '{$userid}', `bio`=' {$bio}', `age`=' {$age}', `permanent_address`=' {$paddress}', `temp_address`=' {$taddress}', `teaching_city`=' {$city }', `teaching_location`=' {$location}', `teacher_qualification`='{ $qualification}', `teaching_experience`=' {$experience}', `experience_years`='{$experiyence_year}', `max_students`=' {$no_student}', `expected_fee`=' {$fee}', `available_shift`=' {$shift}', `available_timeslot`=' { $timeslot}', `created_at`=' { $time}' WHERE `id` = $id LIMIT 1;";
+					$sql = "UPDATE `profiles` SET `userid`=  '{$userid}', `bio`=' {$bio}', `age`=' {$age}', `permanent_address`=' {$paddress}', `temp_address`=' {$taddress}', `teaching_city`=' {$city }', `teaching_location`=' {$location}', `teacher_qualification`='{ $qualification}', `teaching_experience`=' {$experience}', `experience_years`='{$experiyence_year}', `max_students`=' {$no_student}', `expected_fee`=' {$fee}', `available_shift`=' {$shift}', `available_timeslot`=' { $timeslot}', `created_at`=' { $time}' WHERE `profiles`.`id` = $id LIMIT 1;";
 					
 				
 				} else {			
 
 					echo $sql = "INSERT INTO `profiles` 
 			       ( `userid`, `bio`, `age`, `permanent_address`, `temp_address`, `teaching_city`, `teaching_location`, `teacher_qualification`, `teaching_experience`, `experience_years`, `max_students`, `expected_fee`, `available_shift`, `available_timeslot`, `created_at`) 
-			  VALUES ( ' {$userid}', ' {$bio}', ' {$age}', '  { $paddress}', ' { $taddress}', '{$city}', '  {$location}', ' {$qualification}', '  {$experience}', '{   $experiyence_year}', ' {$no_student}', ' {$fee}', ' {$shift}', '{ $timeslot}', ' {$time}')";
+			  VALUES ( ' {$userid}', ' {$bio}', '{$age}', '{ $paddress}', ' { $taddress}', '{$city}', '  {$location}', ' {$qualification}', '  {$experience}', '{   $experiyence_year}', ' {$no_student}', ' {$fee}', ' {$shift}', '{ $timeslot}', ' {$time}')";
 					
 
 				}
@@ -162,7 +162,7 @@
 	/*		
 		--------- Grab data for table -------------
 	*/
-		
+					
 	
 	$all_users_query="select * from profiles";
 	$all_users=mysql_query($all_users_query);	
