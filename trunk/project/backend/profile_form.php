@@ -1,13 +1,16 @@
 <?php	
-            if(defined('WEB_ROOT')){ ?> 
+            if(defined('WEB_ROOT')){  //Login Validation ?>  
 
-<h3>Add Profiles</h3>
+<!--<h3>Add Profiles</h3>-->
 				
 		<form class="form-horizontal" action="profile.php?form_action=<?php echo $form_action?>" method="POST" enctype="multipart/form-data">
 				
 				<?php if ($form_action == "edit") { ?>
+				            <h3>Edit Profiles</h3>
 							<input type="hidden" name="id" value="<?php echo $id;?>" />
-				<?php } ?>		
+				<?php }else {?> <h3>Add Profiles</h3> <?php }
+
+          				?>		
 						
 			<div class="control-group">
 			      <label class="control-label" for="inputAddress">User ID :</label>
@@ -22,7 +25,7 @@
 			<div class="control-group">
 			  <label class="control-label" for="inputAddress">Biodata :</label>
 				<div class="controls">
-				<!--	  <textarea rows="3" name="bio"  name="bio" value="<?php if ($bio) {echo $bio;}?>"></textarea> -->
+			
 					  <textarea rows="3"  name="bio" /><?php if( isset($bio)) echo $bio; ?></textarea>				
 						<?php if($ebio){ ?>
 						<span class="error"> <?php echo $ebio; ?>	</span>
