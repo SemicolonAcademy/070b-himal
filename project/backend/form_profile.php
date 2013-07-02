@@ -22,7 +22,8 @@
 			<div class="control-group">
 			  <label class="control-label" for="inputAddress">Biodata :</label>
 				<div class="controls">
-					  <textarea rows="3" name="bio"  name="bio" value="<?php if ($bio) {echo $bio;}?>"></textarea> 
+				<!--	  <textarea rows="3" name="bio"  name="bio" value="<?php if ($bio) {echo $bio;}?>"></textarea> -->
+					  <textarea rows="3"  name="bio" /><?php if( isset($bio)) echo $bio; ?></textarea>				
 						<?php if($ebio){ ?>
 						<span class="error"> <?php echo $ebio; ?>	</span>
 					<?php } ?>
@@ -78,7 +79,7 @@
 			<div class="control-group">
 				<label class="control-label" for="inputAddress" >Teaching Location :</label>
 				<div class="controls">
-					    <textarea rows="3" name="tlocation" value="<?php if ($location){echo $location;}?>"></textarea>
+					    <textarea rows="3"  name="tlocation" /><?php if( isset($location)) echo $location; ?></textarea>				
 						<?php if($elocation){ ?>
 						<span class="error"> <?php echo $elocation; ?>	</span>
 					<?php } ?>
@@ -88,7 +89,7 @@
 			<div class="control-group">
 			  <label class="control-label" >Qulification :</label>
 				<div class="controls">
-				 <textarea rows="3" name="qualification"  value="<?php if ($qualification){echo $qualification;}?>" ></textarea>
+				 <textarea rows="3"  name="qualification" /><?php if( isset($qualification)) echo $qualification; ?></textarea>				
 						<?php if($equalification){ ?>
 						<span class="error"> <?php echo $equalification ;?>	</span>
 					<?php } ?>
@@ -98,7 +99,7 @@
 			<div class="control-group">
 				 <label class="control-label" >Teaching Experience :</label>
 				<div class="controls">
-				   <textarea rows="3" name="experience"  value="<?php if ($experience){echo $experience;}?>" ></textarea>
+				   <textarea rows="3"  name="experience" /><?php if( isset($experience)) echo $experience; ?></textarea>				
 						<?php if($eexperience){ ?>
 						<span class="error"> <?php echo $eexperience ;?>	</span>
 					<?php } ?>
