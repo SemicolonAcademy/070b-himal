@@ -11,7 +11,7 @@
 if(isset($_POST['submit']))
 {    
     $table = "users";
-	$password=aadslashes($_POST["password"]);
+	$password=addslashes($_POST["password"]);
 	$email=addslashes($_POST["email"]);
     		
 	if ($email == '') {				
