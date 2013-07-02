@@ -245,7 +245,7 @@
 		
 		<hr/>
 		
-		<?php include "form_profile.php"; ?>
+		<?php include "profile_form.php"; ?>
 
 		
 		
