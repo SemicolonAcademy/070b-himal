@@ -46,8 +46,11 @@
 					header("location: $self");
                    					
 				}
-				else {
-				$form_values = $_POST;
+				else { 
+				$get_single_row_query = "select * from $table WHERE `id` = $id";			
+			$single_row_result = mysql_query($get_single_row_query);			
+			$row_data = mysql_fetch_assoc($single_row_result);
+			$form_values = $row_data;
 			}
 	  
 	  }	 
@@ -117,15 +120,10 @@
 
   <body>
     <?php include "navbar.php";?>
-	
-    <div class="container">
-	  <div class="bs-docs-example">
-            <a href="<?php echo $self_url; ?>"><h3>Contacts</h3></a> 
-	   <hr>		  
-		<?php 	
 
-		<a href="<?php echo $self_url; ?>"><h3>Contacts</h3></a>
-          </div>
+    <div class="container">
+
+	<a href="<?php echo $self_url; ?>"><h3>Contacts</h3></a>
 		  	  
 		<?php 
 		   $sel="SELECT * FROM contact";
