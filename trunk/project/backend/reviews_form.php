@@ -33,7 +33,7 @@ if ($form_action == "edit") { ?>
 		<div class="control-group">
 		  <label class="control-label" for="inputphone">Phone</label>
 		  <div class="controls">
-			<input type="text" name="phone" value="<?php if( isset($form_values['phone'])) echo $form_values['phone']; ?>" />
+			<input type="text" name="phone" value="<?php if(isset($form_values['phone']))echo$form_values['phone']; ?>" />
 			<?php if( isset($errors['phone'])){ ?>
 					<span class="help-inline"><?php echo $errors['phone'];?></span>
 			<?php } ?>
@@ -42,7 +42,7 @@ if ($form_action == "edit") { ?>
 		<div class="control-group">
 		  <label class="control-label" for="inputemail">Email</label>
 		  <div class="controls">
-			<input type="text" name="email" value="<?php if( isset($form_values['email'])) echo $form_values['email']; ?>" />
+			<input type="text" name="email" value="<?php if(isset($form_values['email']))echo$form_values['email']; ?>" />
 			<?php if( isset($errors['email'])){ ?>
 					<span class="help-inline"><?php echo $errors['email'];?></span>
 			<?php } ?>
