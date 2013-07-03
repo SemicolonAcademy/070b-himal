@@ -154,8 +154,8 @@
 							<td><?php echo $conct['message'] ?></td>
 
 						<td>
-							<a href="index.php?form_action=status&id=<?php echo $conct['id'];?>">Activate</a> | 
-							<a href="index.php?form_action=featured&id=<?php echo $conct['id'];?>">Recommend</a>
+							<a href="contact.php?id=<?php echo $conct['id'];?>">Contacts</a>  
+							
 						</td>
 					</tr>
 				<?php  } ?>
