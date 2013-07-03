@@ -5,7 +5,9 @@
 	$sql="select * from contact order by `created_at` desc limit 5";
 	$contact=mysql_query($sql);
 	
-	/*if($form_action == "status"){
+	$form_action = (isset($_GET['form_action']));
+	
+	if($form_action == "status"){
 	    echo "i am in atatus" ;
 	    $id=$_GET["id"];
 	   
@@ -31,7 +33,7 @@
 			}
 		mysql_query($sql);
         header('location:index.php');		
-	}*/
+	}
 	
 ?>
 <!DOCTYPE html>
@@ -107,8 +109,8 @@
 						<td><?php echo $row['phone']; ?></td>
 						<td><?php echo $row['email']; ?></td>
 						<td>
-							<a href="index.php?form_action=status&id=<?php echo $row['id'];?>"><?php if($row['status']==0){?>
-					                Activate<?php } ?></a>   | 
+							<a href="index.php?form_action=status&id=<?php echo $row[id];?>"><?php if($row['status']==0){?>
+					                Active<?php } else { ?> <?php } ?></a> | 
 							<a href="index.php?form_action=featured&id=<?php echo $row['id'];?>"><?php if($row['featured']==0){?>
 					                Recommend <?php } ?></a>  
 						</td>
