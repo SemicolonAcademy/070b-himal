@@ -4,6 +4,42 @@
 	$action = $_GET['action'];
 	$form_action = (isset($_GET['form_action'])) ? $_GET['form_action'] : "insert";
 	
+ /*---------------------Status checking and update-------------------------------------*/	
+	
+	if($form_action == "status"){
+	    
+	   $id=$_GET["id"];
+	   
+	    $q="select * from users WHERE `id` = $id";
+		$result=mysql_query($q);	
+		$row=mysql_fetch_assoc($result);
+	    if($row['status']==0){
+	        $sql = "UPDATE `users` SET `status`=1 WHERE `id`=$id LIMIT 1";
+			}
+		else{
+		    $sql = "UPDATE `users` SET `status`=0 WHERE `id`=$id LIMIT 1";
+			}
+	    mysql_query($sql);
+        header('location:users.php');		
+	}
+  
+/*---------------------Recommendation checking and update------------------------------------*/
+  
+	if($form_action == "featured"){
+	    
+	   $id=$_GET["id"];
+	   
+	    $q="select * from users WHERE `id` = $id";
+		$result=mysql_query($q);	
+		$row=mysql_fetch_assoc($result);
+	    if($row['featured']==0){
+	        $sql = "UPDATE `users` SET `featured`=1 WHERE `id`=$id LIMIT 1";
+			}
+		mysql_query($sql);
+        header('location:users.php');		
+	}
+	
+/*---------------------Deleting particular user-------------------------------------*/	
 	
 	
 	if ($action == "delete"){		
@@ -23,6 +59,7 @@
 		header('Location:users.php');
 	}
 	
+	/*---------------------Grab data for editing-------------------------------------*/	
 	
 	if ($form_action == "edit" && !$_POST['user_edit']){
 			
@@ -236,13 +273,14 @@
 		<tr>
 			<th>S.N.</th>
 			<th>Images</th>
-			<th>Username</th>
+		<!--<th>Username</th>-->
 			<th>Name</th>
 			<th>Email</th>
-			<th>Gender</th>
+		<!--<th>Gender</th> -->
 			<th>Phone</th>
-			<th>Address</th>
+		<!--<th>Address</th>-->
 			<th>Status</th>
+			<th>Featured</th>
 			<th>Created on</th>
 			<th>Actions</th>
 		</tr>
@@ -250,15 +288,20 @@
 			<tr>
 				<td><?php echo $i;?></td>
 				<td><img width="100" src="uploads/<?php echo $user['photo']; ?>" /></td>
-				<td><?php echo $user['username']; ?></td>
+			<!--<td><?php echo $user['username']; ?></td>-->
 				<td><?php echo $user['first_name'] . " " . $user['middle_name'] . " " . $user['last_name'];?></td>
 				<td><?php echo $user['email']; ?></td>
-				<td><?php echo ($user['gender'] == "m") ? "Male" : "Female"; ?></td>
+			<!--<td><?php echo ($user['gender'] == "m") ? "Male" : "Female"; ?></td>-->
 				<td><?php echo $user['phone']; ?></td>
-				<td><?php echo $user['address']; ?></td>
+			<!--<td><?php echo $user['address']; ?></td>-->
 				<td><?php echo ($user['status'] == 0) ? "Inactive" : "Active"; ?></td>
+				<td><?php echo ($user['featured'] == 0) ? "" : "Recommended"; ?></td>
 				<td><?php echo date("m-d-Y", $user['created_on']); ?></td>
 				<td>
+				    <a href="users.php?form_action=status&id=<?php echo $user[id];?>"><?php if($user['status']==0){?>
+					        Active<?php } else { ?>Inactive<?php } ?></a> | 
+					<a href="users.php?form_action=featured&id=<?php echo $user[id];?>"><?php if($user['featured']==0){?>
+					        Recommend |<?php } ?></a>  		
 					<a href="users.php?form_action=edit&id=<?php echo $user[id];?>">Edit</a> | 
 					<a href="profile.php?id=<?php echo $user[id];?>">Add Profile</a> |
 					<a href="users.php?action=delete&id=<?php echo $user [id];?>">Delete</a> 
