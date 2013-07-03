@@ -1,3 +1,5 @@
+july 2 2013
+ALTER TABLE  `users` ADD  `featured` INT NOT NULL DEFAULT  '0' AFTER  `status`
 
 2013/6/26 10:06pm
 
