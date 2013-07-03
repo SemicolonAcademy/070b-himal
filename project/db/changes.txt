@@ -1,3 +1,11 @@
+july 2-2013
+ALTER TABLE  `reviews` CHANGE  `created_at`  `created_at` VARCHAR( 255 ) NOT NULL;
+ALTER TABLE  `profiles` CHANGE  `created_at`  `created_at` VARCHAR( 255 ) NOT NULL;
+ALTER TABLE  `users` CHANGE  `created_on`  `created_on` VARCHAR( 255 ) NOT NULL;
+ALTER TABLE  `users` CHANGE  `updated_on`  `updated_on` VARCHAR( 255 ) NOT NULL;
+
+
+
 july 2 2013
 ALTER TABLE  `users` ADD  `featured` INT NOT NULL DEFAULT  '0' AFTER  `status`
 
