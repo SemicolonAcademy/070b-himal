@@ -2,10 +2,12 @@
 	include "config.php";
 	$q="select * from users order by `created_on` desc limit 5";
 	$result=mysql_query($q);
+	$sql="select * from contact order by `created_at` desc limit 5";
+	$contact=mysql_query($sql);
 	
-	if($form_action == "status"){
+	/*if($form_action == "status"){
 	    echo "i am in atatus" ;
-	   $id=$_GET["id"];
+	    $id=$_GET["id"];
 	   
 	    $q="select * from users WHERE `id` = $id";
 		$result=mysql_query($q);	
@@ -29,7 +31,7 @@
 			}
 		mysql_query($sql);
         header('location:index.php');		
-	}
+	}*/
 	
 ?>
 <!DOCTYPE html>
@@ -82,32 +84,83 @@
     <div class="container">
 				<h3>Welcome Home Tuition Nepal Admin</h3>
 				<p>This is a administrative dashboard from where you can manage all sections of your website.</p>
-    </div> 
-	<div class="span8 text-center">
-			<div class="teacher">
-			 <h4>Latest Teacher</h4>
-				<p class="teacher-info">
-				<?php  while($row=mysql_fetch_assoc($result)){ ?>
-				<strong>Name :</strong>
-				<?php echo $row['first_name'] . " " . $row['middle_name'] . " " . $row['last_name']; ?>
-                <strong>phone :</strong>
-				<?php echo $row['phone']; ?>
-                <strong>email :</strong>
-				<?php echo $row['email']; ?>
-                <strong>has been added.</strong>
-				<a href="index.php?form_action=status&id=<?php echo $row['id'];?>">Activate</a> | 
-				<a href="index.php?form_action=featured&id=<?php echo $row['id'];?>">Recommend</a>
-				<br>
-				<?php } ?>
-				</br>
-				</p>		
-			</div>	
     </div>
-	<div class="span4 text-center">
+	
+	<!--------------------------------------- Displays the latest teacher--------------------------------->
+	
+	<div class="span7 text-center">
+        <div class="teacher">
+		   <h4>Latest Teacher</h4>
+		
+        <table class="table table-hover">
+				   <tr>
+					<th>Photoes</th>
+					<th>Name</th>
+					<th>Phone</th>
+					<th>Email</th>
+					<th>Action</th>	
+				   </tr>
+				<?php while( $row =mysql_fetch_assoc($result)) { ?>
+					<tr>
+					    <td><img width="100" src="uploads/<?php echo $row['photo']; ?>" /></td>
+						<td><?php echo $row['first_name'] . " " . $row['middle_name'] . " " . $row['last_name']; ?></td>
+						<td><?php echo $row['phone']; ?></td>
+						<td><?php echo $row['email']; ?></td>
+						<td>
+							<a href="index.php?form_action=status&id=<?php echo $row['id'];?>"><?php if($row['status']==0){?>
+					                Activate<?php } ?></a>   | 
+							<a href="index.php?form_action=featured&id=<?php echo $row['id'];?>"><?php if($row['featured']==0){?>
+					                Recommend <?php } ?></a>  
+						</td>
+					</tr>
+				<?php  } ?>
+				
+		</table>
+
+		
+			
+		</div>	
+    </div>
+	<div class="span5 text-center">
 			<div class="teacher">
 			 <h4>Recent Activites</h4> 
+			 
+			</div>	
+    </div>
+	<div class="span7 text-center">
+			<div class="teacher">
+			 <h4>Latest Reviews</h4> 
 			  <p class="teacher-info">
 			  </p>		
+			</div>	
+    </div>
+	<div class="span5 text-center">
+			<div class="teacher">
+			 <h4 >Contacts</h4> 
+			   <table class="table table-hover">
+				   <tr>
+					
+							<th>Name</th>
+							<th>Phone</th>
+							<th>Email</th>
+							<th>Massage</th>
+							<th>Action</th>	
+				   </tr>
+				<?php while( $conct = mysql_fetch_assoc($contact)) { ?>
+					<tr>
+							<td><?php echo $conct['name'] ?></td>
+							<td><?php echo $conct['phone'] ?></td>
+							<td><?php echo $conct['email'] ?></td>
+							<td><?php echo $conct['message'] ?></td>
+
+						<td>
+							<a href="index.php?form_action=status&id=<?php echo $conct['id'];?>">Activate</a> | 
+							<a href="index.php?form_action=featured&id=<?php echo $conct['id'];?>">Recommend</a>
+						</td>
+					</tr>
+				<?php  } ?>
+				
+		</table>
 			</div>	
     </div>
 	
