@@ -1,78 +1,42 @@
 <?php
 	include "config.php";
-	$q="select * from users";
-	$result=mysql_query($q);	
+	$q="select * from users order by `created_on` desc limit 5";
+	$result=mysql_query($q);
 	
-	
-if (isset($_POST["signup"]))
-{
-	
-		$src=$_FILES['image']['tmp_name'];
-		$dest='./uploads/'.$_FILES['image']['name'];
-		
-		if(move_uploaded_file($src,$dest))
-		{
-			$filename=$_FILES['image']['name'];
+	if($form_action == "status"){
+	    echo "i am in atatus" ;
+	   $id=$_GET["id"];
+	   
+	    $q="select * from users WHERE `id` = $id";
+		$result=mysql_query($q);	
+		$row=mysql_fetch_assoc($result);
+	    if($row['status']==0){
+	        $sql = "UPDATE `users` SET `status`=1 WHERE `id`=$id LIMIT 1";
 			}
-		$pos1=strpos($filename,'.');
-		$image_type=substr($filename,-(strlen($filename)-$pos1)+1);
-		if($image_type=='jpeg'||$image_type=='bmp'||$image_type=='png'||$image_type=='gif')
-			{continue;}
-		else
-		{$eimage="please select the correct image file.The image type is"." ".$image_type;}
-			
-
-		$username=$_POST["username"];
-		$first_name=$_POST["first_name"];
-		$middle_name=$_POST["middle_name"];
-		$last_name=$_POST["last_name"];
-		$email=$_POST["email"];
-		$password=$_POST["password"];
-		$password_check=$_POST["password_check"];
-		$gender=$_POST["gender"];
-		$phone=$_POST["phone"];
-		$address=$_POST["address"];
-		$checkbox=$_POST["checkbox"];
-		
-	
-	
-		if ($username == '')
-			{$eusername = "Enter your name !!";}
-		if ($email == '')
-			{$eemail="Enter your email !!";}
-		if ($password == '')
-			{$epassword="Enter password !!";}	
-		if($password_check!==$password)
-			{$epassword_check="Password does not match !!";}
-		if ($gender== '')
-			{$egender="Select a gender !!";}
-		if ($first_name=='')
-		 {$efirst_name="enter your first name";}
-		if ($last_name=='')
-		 {$elast_name="enter your last name";}
-		 if ($phone=='')
-		 {$ephone="enter your phone name";}
-		 if ($address=='')
-		 {$eaddress="enter your address";}
-		
-		 
-		if ($checkbox == '')
-			{$echeckbox="Agree to our terms and conditions !!";}
-		$now=time();
-		 $sql = "INSERT INTO `htnepal`.`users` (`id`, `username`,`first_name`,`middle_name`,`last_name`, `password`, `email`, `gender`,`phone`,`address`, `created_on`,`photo`) VALUES (NULL, '$username','$first_name','$middle_name','$last_name','$password', '$email', '$gender','$phone','$address', '$now','$filename')";
 		mysql_query($sql);
-
-		header('Location: users.php');
-		
-		
+        header('location:index.php');		
+	}
 	
-}
+	if($form_action == "featured"){
+	    
+	   $id=$_GET["id"];
+	   
+	    $q="select * from users WHERE `id` = $id";
+		$result=mysql_query($q);	
+		$row=mysql_fetch_assoc($result);
+	    if($row['featured']==0){
+	        $sql = "UPDATE `users` SET `featured`=1 WHERE `id`=$id LIMIT 1";
+			}
+		mysql_query($sql);
+        header('location:index.php');		
+	}
+	
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Bootstrap, from Twitter</title>
+    <title>Home Tuition Nepal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -87,6 +51,14 @@ if (isset($_POST["signup"]))
 	  {color:#ff0000;}
 	   .error
 	  {color:#ff0000;}
+	   .teacher {
+		text-align:center;
+	  }
+	  
+	  p.teacher-info{
+		margin-top:10px;	  
+	  }
+	  
     </style>
     <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -110,7 +82,37 @@ if (isset($_POST["signup"]))
     <div class="container">
 				<h3>Welcome Home Tuition Nepal Admin</h3>
 				<p>This is a administrative dashboard from where you can manage all sections of your website.</p>
-    </div> <!-- /container -->
+    </div> 
+	<div class="span8 text-center">
+			<div class="teacher">
+			 <h4>Latest Teacher</h4>
+				<p class="teacher-info">
+				<?php  while($row=mysql_fetch_assoc($result)){ ?>
+				<strong>Name :</strong>
+				<?php echo $row['first_name'] . " " . $row['middle_name'] . " " . $row['last_name']; ?>
+                <strong>phone :</strong>
+				<?php echo $row['phone']; ?>
+                <strong>email :</strong>
+				<?php echo $row['email']; ?>
+                <strong>has been added.</strong>
+				<a href="index.php?form_action=status&id=<?php echo $row['id'];?>">Activate</a> | 
+				<a href="index.php?form_action=featured&id=<?php echo $row['id'];?>">Recommend</a>
+				<br>
+				<?php } ?>
+				</br>
+				</p>		
+			</div>	
+    </div>
+	<div class="span4 text-center">
+			<div class="teacher">
+			 <h4>Recent Activites</h4> 
+			  <p class="teacher-info">
+			  </p>		
+			</div>	
+    </div>
+	
+	
+	<!-- /container -->
 
     <!-- Le javascript
     ================================================== -->

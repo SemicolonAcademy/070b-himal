@@ -15,7 +15,8 @@
               <li><a href="reviews.php">Reviews</a></li>
 			  <li><a href="contact.php">Contacts</a></li>
               <li><a href="subjects.php">Subjects</a></li>
-			  <li><a href="levels.php">Levels</a></li>		  
+			  <li><a href="levels.php">Levels</a></li>
+              <li><a href="location.php">Locations</a></li>			  
 			  
 			</ul>
 			 

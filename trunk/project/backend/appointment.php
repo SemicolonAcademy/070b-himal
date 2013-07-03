@@ -118,7 +118,7 @@
 	-------------------------------------------------*/
 		
 	
-	$get_all_query = "select * from $table";
+	$get_all_query = "select * from $table ";
 	$all_result = mysql_query($get_all_query);	
 
 	

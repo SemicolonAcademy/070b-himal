@@ -84,7 +84,7 @@
 	 
      /*-----------------------Deleting particular contact---------------------*/	 
 	 
-	$get_all_query = "select * from $table";
+	$get_all_query = "select * from $table ";
 	$all_result = mysql_query($get_all_query);
 			
  ?>
@@ -129,7 +129,7 @@
 	<a href="<?php echo $self_url; ?>"><h3>Contacts</h3></a>
 		  	  
 		<?php 
-		   $sel="SELECT * FROM contact";
+		   $sel="SELECT * FROM contact order by `name` desc ";
 		   $result=mysql_query($sel);
 		   if ($row = mysql_fetch_array($result)){
 		   $i=1;
