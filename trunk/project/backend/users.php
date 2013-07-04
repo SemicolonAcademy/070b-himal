@@ -198,7 +198,7 @@
 				
 				} else {			
 
-					echo $sql = "INSERT INTO `htnepal`.`users` (`id`, `username`,`first_name`,`middle_name`,`last_name`, `password`, `email`, `gender`,`phone`,`address`, `created_on`,`photo`) VALUES (NULL, '$username','$first_name','$middle_name','$last_name','$password', '$email', '$gender','$phone','$address', '$now','$filename')";
+				    $sql = "INSERT INTO `htnepal`.`users` (`id`, `username`,`first_name`,`middle_name`,`last_name`, `password`, `email`, `gender`,`phone`,`address`, `created_on`,`photo`) VALUES (NULL, '$username','$first_name','$middle_name','$last_name','$password', '$email', '$gender','$phone','$address', '$now','$filename')";
 					
 
 				}
@@ -207,7 +207,6 @@
 					--------- If query executes succesfully redirect to base page. -------------
 				*/
 				
-				echo $sql;
 				mysql_query($sql) or die(mysql_error());
 				//header('location: users.php');
 			
