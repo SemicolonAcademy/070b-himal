@@ -4,6 +4,8 @@
 	$result=mysql_query($q);
 	$sql="select * from contact order by `created_at` desc limit 5";
 	$contact=mysql_query($sql);
+	$appoint="select * from appointments order by `created_at` desc limit 2";
+	$appointment=mysql_query($appoint);
 	
 	$form_action = (isset($_GET['form_action']));
 	
@@ -74,10 +76,16 @@
     <!-- Fav and touch icons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="assets/ico/logo.png">
-  </head>
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+             <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+                    <link rel="shortcut icon" href="assets/ico/logo.png">
+                        <style type="text/css">
+<!--
+.style1 {color: #CC0000}
+.style3 {color: #F0F0F0; }
+-->
+                                   </style>
+</head>
 
   <body>
   
@@ -90,81 +98,107 @@
 	
 	<!--------------------------------------- Displays the latest teacher--------------------------------->
 	
-	<div class="span7 text-center">
-        <div class="teacher">
-		   <h4>Latest Teacher</h4>
-		
-        <table class="table table-hover">
-				   <tr>
-					<th>Photoes</th>
-					<th>Name</th>
-					<th>Phone</th>
-					<th>Email</th>
-					<th>Action</th>	
-				   </tr>
-				<?php while( $row =mysql_fetch_assoc($result)) { ?>
-					<tr>
-					    <td><img width="100" src="uploads/<?php echo $row['photo']; ?>" /></td>
-						<td><?php echo $row['first_name'] . " " . $row['middle_name'] . " " . $row['last_name']; ?></td>
-						<td><?php echo $row['phone']; ?></td>
-						<td><?php echo $row['email']; ?></td>
-						<td>
-							<a href="index.php?form_action=status&id=<?php echo $row[id];?>"><?php if($row['status']==0){?>
-					                Active<?php } else { ?> <?php } ?></a> | 
-							<a href="index.php?form_action=featured&id=<?php echo $row['id'];?>"><?php if($row['featured']==0){?>
-					                Recommend <?php } ?></a>  
-						</td>
-					</tr>
-				<?php  } ?>
+		<div class="span7 text-center">
+			<div class="teacher">
+				   <h4>Latest Teacher</h4>
 				
-		</table>
+				<table class="table table-hover">
+						   <tr>
+								<th>Photoes</th>
+								<th>Name</th>
+								<th>Phone</th>
+								<th>Email</th>
+								<th>Action</th>	
+						   </tr>
+						<?php while( $row =mysql_fetch_assoc($result)) { ?>
+							<tr>
+								<td><img width="100" src="uploads/<?php echo $row['photo']; ?>" /></td>
+								<td><?php echo $row['first_name'] . " " . $row['middle_name'] . " " . $row['last_name']; ?></td>
+								<td><?php echo $row['phone']; ?></td>
+								<td><?php echo $row['email']; ?></td>
+								<td>
+								<a href="index.php?form_action=status&id=<?php echo $row[id];?>"><?php if($row['status']==0){?>
+										Active<?php } else { ?> <?php } ?></a> | 
+								<a href="index.php?form_action=featured&id=<?php echo $row['id'];?>"><?php if($row['featured']==0){?>
+										Recommend <?php } ?></a>  
+								</td>
+							</tr>
+						<?php  } ?>
+						
+				</table>
 
+			</div>	
+		</div>
+	    
+	<!--------------------------------------- Displays the latest Appointments--------------------------------->	
 		
+		
+		<div class="span5 text-center">
+			<div class="teacher">
+			      <h4><a href="appointment.php">Recent Appointments</a></h4> 
 			
-		</div>	
-    </div>
-	<div class="span5 text-center">
-			<div class="teacher">
-			 <h4>Recent Activites</h4> 
-			 
-			</div>	
-    </div>
-	<div class="span7 text-center">
-			<div class="teacher">
-			 <h4>Latest Reviews</h4> 
-			  <p class="teacher-info">
-			  </p>		
-			</div>	
-    </div>
-	<div class="span5 text-center">
-			<div class="teacher">
-			 <h4 >Contacts</h4> 
-			   <table class="table table-hover">
-				   <tr>
-					
-							<th>Name</th>
-							<th>Phone</th>
-							<th>Email</th>
-							<th>Massage</th>
-							<th>Action</th>	
-				   </tr>
-				<?php while( $conct = mysql_fetch_assoc($contact)) { ?>
-					<tr>
-							<td><?php echo $conct['name'] ?></td>
-							<td><?php echo $conct['phone'] ?></td>
-							<td><?php echo $conct['email'] ?></td>
-							<td><?php echo $conct['message'] ?></td>
-
-						<td>
-							<a href="contact.php?id=<?php echo $conct['id'];?>">Contacts</a>  
+					<?php while( $single_row = mysql_fetch_assoc($appointment)) { ?>
+						 <div class="bs-docs-example">
+							<div class="alert alert-block">
+								 <button  type="button" class="close" data-dismiss="alert">x</button>
+								 
+								   
+										<p><h4 class="style3"><?php echo $single_row['name']; ?></h4> </p>
+										<p>Appointed:<a href="#"><?php echo $single_row['userid']; ?></a></p>
+										<p><?php echo $single_row['message']; ?></p>
+										<p class="style1">Contact:<?php echo $single_row['phone']; ?>/<?php echo $single_row['email']; ?></p>
+										<p><?php echo $single_row['created_at']; ?></p>	
 							
-						</td>
-					</tr>
-				<?php  } ?>
-				
-		</table>
+							</div>
+						</div>
+							
+					<?php  } ?>
 			</div>	
-    </div>
+        </div>
+	
+	    
+		<div class="span7 text-center">
+			<div class="teacher">
+			    
+				<h4>Latest Reviews</h4> 
+			    		
+			</div>	
+        </div>
+	
+	    
+		<div class="span5 text-center">
+			<div class="teacher">
+			             <h4 >Contacts</h4> 
+			    <table class="table table-hover">
+						   <tr>
+							
+									<th>Name</th>
+									<th>Phone</th>
+									<th>Email</th>
+									<th>Massage</th>
+									<th>Action</th>	
+						   </tr>
+						<?php while( $conct = mysql_fetch_assoc($contact)) { ?>
+							<tr>
+									<td><?php echo $conct['name'] ?></td>
+									<td><?php echo $conct['phone'] ?></td>
+									<td><?php echo $conct['email'] ?></td>
+									<td><?php echo $conct['message'] ?></td>
+
+								<td>
+									<a href="contact.php?id=<?php echo $conct['id'];?>">Contacts</a>  
+									
+								</td>
+							</tr>
+						<?php  } ?>
+						
+				</table>
+			</div>	
+        </div>
+	<div>
+	
+	
+
 	
 	
 	<!-- /container -->
