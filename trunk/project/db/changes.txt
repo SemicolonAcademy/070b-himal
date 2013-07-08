@@ -1,3 +1,21 @@
+july 7 2013 9:38 am
+ALTER TABLE  `locations` ADD  `id` INT NOT NULL AUTO_INCREMENT FIRST ,
+ADD PRIMARY KEY (  `id` ;
+
+
+
+july 4 2013 10:06 pm
+
+ALTER TABLE  `appointments` CHANGE  `userid`  `userid` VARCHAR( 255 ) NOT NULL;
+ALTER TABLE  `profiles` CHANGE  `userid`  `userid` VARCHAR( 255 ) NOT NULL;
+ALTER TABLE  `reviews` CHANGE  `userid`  `userid` VARCHAR( 255 ) NOT NULL;
+ALTER TABLE  `teacher_level` CHANGE  `userid`  `userid` VARCHAR( 255 ) NOT NULL;
+ALTER TABLE  `teacher_subject` CHANGE  `userid`  `userid` VARCHAR( 255 ) NOT NULL;
+
+
+
+
+
 july 2-2013
 ALTER TABLE  `reviews` CHANGE  `created_at`  `created_at` VARCHAR( 255 ) NOT NULL;
 ALTER TABLE  `profiles` CHANGE  `created_at`  `created_at` VARCHAR( 255 ) NOT NULL;
