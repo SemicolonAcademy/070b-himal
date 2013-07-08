@@ -1,3 +1,8 @@
+july 8 2013
+ALTER TABLE  `profiles` CHANGE  `teaching_location`  `teaching_location` INT NOT NULL;
+ALTER TABLE `locations` DROP `userid`;
+
+
 july 7 2013 9:38 am
 ALTER TABLE  `locations` ADD  `id` INT NOT NULL AUTO_INCREMENT FIRST ,
 ADD PRIMARY KEY (  `id` ;
