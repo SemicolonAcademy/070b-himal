@@ -16,12 +16,12 @@
 			  <li><a href="contact.php">Contacts</a></li>
               <li><a href="subjects.php">Subjects</a></li>
 			  <li><a href="levels.php">Levels</a></li>
-              <li><a href="location.php">Locations</a></li>			  
+              <li><a href="locations.php">Locations</a></li>			  
 			  
 			</ul>
 			 
 			<ul class="nav pull-right">
-              <li><a href="#">Welcome, <?php echo $_SESSION['email']; ?></a></li>
+              <li><a href="view_profile.php?id=<?php echo $_SESSION['user_id'];?>">Welcome, <?php echo $_SESSION['email']; ?></a></li>
               <li><a href="logout.php">Logout</a></li>
 			</ul>
 			

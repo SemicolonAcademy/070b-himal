@@ -1,17 +1,20 @@
 <?php
 	include "config.php";
-	$q="select * from users order by `created_on` desc limit 5";
-	$result=mysql_query($q);
-	$sql="select * from contact order by `created_at` desc limit 5";
-	$contact=mysql_query($sql);
-	$appoint="select * from appointments order by `created_at` desc limit 2";
-	$appointment=mysql_query($appoint);
+	$user_sql="select * from users order by `created_on` desc limit 5";
+	$user=mysql_query($user_sql);
+	$con_sql="select * from contact order by `created_at` desc limit 5";
+	$contact=mysql_query($con_sql);
+	$app_sql="select * from users,appointments where users.id=appointments.userid order by `created_at` desc limit 3";
+	$appointment=mysql_query($app_sql);
+	$review_sql="select * from users,reviews where users.id=reviews.userid order by created_at desc limit 3";
+	$review=mysql_query($review_sql);
+	
 	
 	$form_action = (isset($_GET['form_action']));
 	
 	if($form_action == "status"){
-	    echo "i am in atatus" ;
-	    $id=$_GET["id"];
+	    
+	   $id=$_GET["id"];
 	   
 	    $q="select * from users WHERE `id` = $id";
 		$result=mysql_query($q);	
@@ -19,7 +22,7 @@
 	    if($row['status']==0){
 	        $sql = "UPDATE `users` SET `status`=1 WHERE `id`=$id LIMIT 1";
 			}
-		mysql_query($sql);
+	    mysql_query($sql);
         header('location:index.php');		
 	}
 	
@@ -32,7 +35,7 @@
 		$row=mysql_fetch_assoc($result);
 	    if($row['featured']==0){
 	        $sql = "UPDATE `users` SET `featured`=1 WHERE `id`=$id LIMIT 1";
-			}
+			}	
 		mysql_query($sql);
         header('location:index.php');		
 	}
@@ -110,17 +113,17 @@
 								<th>Email</th>
 								<th>Action</th>	
 						   </tr>
-						<?php while( $row =mysql_fetch_assoc($result)) { ?>
+						<?php while( $row =mysql_fetch_assoc($user)) { ?>
 							<tr>
 								<td><img width="100" src="uploads/<?php echo $row['photo']; ?>" /></td>
 								<td><?php echo $row['first_name'] . " " . $row['middle_name'] . " " . $row['last_name']; ?></td>
 								<td><?php echo $row['phone']; ?></td>
 								<td><?php echo $row['email']; ?></td>
 								<td>
-								<a href="index.php?form_action=status&id=<?php echo $row[id];?>"><?php if($row['status']==0){?>
-										Active<?php } else { ?> <?php } ?></a> | 
-								<a href="index.php?form_action=featured&id=<?php echo $row['id'];?>"><?php if($row['featured']==0){?>
-										Recommend <?php } ?></a>  
+								    <a href="index.php?form_action=status&id=<?php echo $row[id];?>"><?php if($row['status']==0){?>
+					                         Active<?php } else {} ?></a> | 
+					                <a href="index.php?form_action=featured&id=<?php echo $row[id];?>"><?php if($row['featured']==0){?>
+					                         Recommend<?php }  else{} ?></a> 
 								</td>
 							</tr>
 						<?php  } ?>
@@ -135,41 +138,33 @@
 		
 		<div class="span5 text-center">
 			<div class="teacher">
-			      <h4><a href="appointment.php">Recent Appointments</a></h4> 
+			      <h4>Recent<a href="appointment.php"> Appointments</a></h4> 
 			
-					<?php while( $single_row = mysql_fetch_assoc($appointment)) { ?>
+					<?php   while($appoint=mysql_fetch_assoc($appointment)){ ?>
 						 <div class="bs-docs-example">
 							<div class="alert alert-block">
 								 <button  type="button" class="close" data-dismiss="alert">x</button>
 								 
 								   
-										<p><h4 class="style3"><?php echo $single_row['name']; ?></h4> </p>
-										<p>Appointed:<a href="#"><?php echo $single_row['userid']; ?></a></p>
-										<p><?php echo $single_row['message']; ?></p>
-										<p class="style1">Contact:<?php echo $single_row['phone']; ?>/<?php echo $single_row['email']; ?></p>
-										<p><?php echo $single_row['created_at']; ?></p>	
-							
+										<p><h4 class="style3"><?php echo $appoint['name']; ?></h4> </p>
+										<p>Appointed:<a href="view_profile.php?id=<?php echo $appoint['userid']?>"><?php echo $appoint['first_name'] . " " . $appoint['middle_name'] . " " . $appoint['last_name']; ?></a></p>
+										<p class="style1">Contact : <?php echo $appoint['email']; ?> / <?php echo $appoint['phone']; ?></p>
+										<p><?php echo $appoint['message']; ?></p>
+										<p><a href="index.php?">
+										</p>
 							</div>
 						</div>
 							
 					<?php  } ?>
 			</div>	
         </div>
+		
+        <!------------------------Latest Contact---------------------------------------------------> 
 	
-	    
 		<div class="span7 text-center">
 			<div class="teacher">
-			    
-				<h4>Latest Reviews</h4> 
-			    		
-			</div>	
-        </div>
-	
-	    
-		<div class="span5 text-center">
-			<div class="teacher">
-			             <h4 >Contacts</h4> 
-			    <table class="table table-hover">
+			   <h4 >Latest<a href="contact.php"> Contacts</a></h4> 
+			     <table class="table table-hover">
 						   <tr>
 							
 									<th>Name</th>
@@ -195,6 +190,28 @@
 				</table>
 			</div>	
         </div>
+		
+	<!-------------------------------Latest Reviews----------------------------------------->
+    
+		<div class="span5 text-center">
+			<div class="teacher">
+			     <h4>Latest<a href="reviews.php"> Reviews</a></h4>
+				 
+                    <?php   while($reviews=mysql_fetch_assoc($review)){ ?>
+                      <div class="bs-docs-example">
+					     <div class="alert alert-block">
+				          <h4 class="style1"><?php echo $reviews['first_name'] . " " . $reviews['middle_name'] . " " . $reviews['last_name'];	 ?></h4>
+			                  <!--	<p>Teacher : <?php echo $reviews['first_name'] . " " . $reviews['middle_name'] . " " . $reviews['last_name'];	 ?></p>-->
+				                    <p>Message : <?php echo $reviews['review']; ?></p>
+				                    <p class="style1">Rating : <?php echo $reviews['rating']; ?></p>
+			                  <!--	<p><a href="index.php?">   </p>-->
+				       </div>
+                    <?php } ?>			 
+			      <p class="teacher-info"></p>		
+			</div>	
+        </div>
+	
+	
 	<div>
 	
 	

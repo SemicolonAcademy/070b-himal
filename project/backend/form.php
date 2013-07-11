@@ -119,7 +119,7 @@
 			<div class="control-group">
 				<label class="control-label" >Address</label>
 				<div class="controls">
-					<input type="text"  name="address" value="<?php if ($address){echo $first_name;}?>" >
+					<input type="text"  name="address" value="<?php if ($address){echo $address;}?>" >
 					<span class="help-inline">
 					<?php if($eaddress){ ?>
 						<span class="error"> <?php echo $eaddress ?>	</span>

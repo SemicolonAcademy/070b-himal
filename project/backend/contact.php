@@ -9,7 +9,7 @@
 	 $err=array();
 	 /*------------------------From Validation-------------------------------*/
 	 function validation(){
-			  if (preg_match("/^[a-zA-Z -]+$/", $_POST['name']) ==  0){
+			 if (preg_match("/^[a-zA-Z -]+$/", $_POST['name']) ==  0){
 					$error['name']= "   Enter name properly !!";
 				}
 			 if (preg_match("/^[+0-9]{7,13}$/", $_POST['phone']) ==  0){
@@ -93,7 +93,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>HTnepal</title>
+    <title>Contact</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -118,7 +118,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
       <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
                     <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-                                    <link rel="shortcut icon" href="assets/ico/logo.png">
+                                   <link rel="shortcut icon" href="assets/ico/logo.png">
   </head>
 
   <body>

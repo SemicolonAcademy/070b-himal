@@ -1,7 +1,7 @@
 <?php 
     include "config.php";
     $time=date("F j, Y, g:i a");			
-	$table = 'reviews';	
+	$table = 'locations';	
 	$form_action = (isset($_GET['form_action'])) ? $_GET['form_action'] : "insert";		
 	
 	/*-------------------------------------------------
@@ -12,20 +12,11 @@
 				
 	function form_validation(){
 			
-			  if ($_POST['userid'] ==  '') {
-				$error = true; $eusername = "Enter your userid !!";
-			}
-			 if (preg_match("/^[a-zA-Z -]+$/", $_POST['name']) ==  0){
-					$err['name'] = "   Enter name correctly !!";
+			 if ($_POST['location'] == ''){
+					$err['location'] = "  Enter location !!";
 					}
-			 if (preg_match("/^[0-9]{7,14}$/", $_POST['phone']) ==  0){
-					$err['phone'] = "   Enter seven to ten digit phone number !!";
-					}
-			 if(preg_match("/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/", $_POST['email']) === 0){
-					$err['email'] = " Enter email correctly !!";
-					}
-             if($_POST['review'] == ''){
-					$err['review']= "Enter review !!";
+			 if ($_POST['slug'] == ''){
+					$err['slug'] = "   Enter slug !!";
 					}
 				return $err;
 	}
@@ -65,15 +56,11 @@
 			//$errors  = form_validation();
 			if (! $errors = form_validation()) {									
 			 
-				$userid=$_POST['userid'];
-				$name=$_POST['name'];
-				$phone=$_POST['phone'];
-				$email=$_POST['email'];
-				$review=$_POST['review'];
-				$time=time();
+				$location=$_POST['location'];
+				$slug=$_POST['slug'];
 				
-				$sql="INSERT INTO `reviews` (`userid`, `name`, `phone`, `email`, `review`, `rating`, `created_at`)
-				                     VALUES ( '{$userid}', '{$name}', '{$phone}', '{$email}', '{$review}', '2', '{$time}')";
+				$sql="INSERT INTO `locations` ( `location`, `slug`)
+				                     VALUES ( '{$location}', '{$slug}')";
 				mysql_query($sql) or die(mysql_error());
 				header("location: $self");			
 			
@@ -93,16 +80,11 @@
 			$errors  = form_validation();
 			if (empty($errors)) {
 			
-				$userid=$_POST['userid'];
-				$name=$_POST['name'];
-				$phone=$_POST['phone'];
-				$email=$_POST['email'];
-				$review=$_POST['review'];
-				$time=time();
+				$location=$_POST['location'];
+				$slug=$_POST['slug'];
 				
 				$id = $_POST['id'];										
-				$sql = "UPDATE {$table} SET `userid` = '$userid', `name`= '$name',`phone`= '$phone',`email`='$email',`review`='$review'
-           				,`rating`=NULL,`created_at`='$time' WHERE `id` = $id LIMIT 1;";
+				$sql = "UPDATE {$table} SET `location`= '$location',`slug`= '$slug' WHERE `id` = $id LIMIT 1;";
 				mysql_query($sql) or die(mysql_error());
 				header("location: $self");						
 			} else {
@@ -124,7 +106,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Reviews</title>
+    <title>Locations</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -151,7 +133,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
       <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
                     <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-                                    <link rel="shortcut icon" href="assets/ico/logo.png">
+                                   <link rel="shortcut icon" href="assets/ico/logo.png">
   </head>
 
   <body>
@@ -160,31 +142,25 @@
 
     <div class="container">
 
-	<a href="<?php echo $self_url; ?>"><h3>Reviews</h3></a>
+	<a href="<?php echo $self_url; ?>"><h3>Location</h3></a>
 	
 	<?php if(mysql_num_rows($all_result)) { ?>
 	
 	<table class="table table-hover">
 		<tr>
 			<th>S.N.</th>
-			<th>Name</th>
-			<th>Phone</th>
-			<th>Email</th>
-			<th>Review</th>
-			<th>Created On</th>			
-			<th>Actions</th>
+			<th>Location</th>
+			<th>Slug</th>
+			<th>Action</th>
 		</tr>
 		<?php $i=1; while( $single_row = mysql_fetch_assoc($all_result)) { ?>
 			<tr>
 				<td><?php echo $i;?></td>
-				<td><?php echo $single_row['name']; ?></td>
-				<td><?php echo $single_row['phone']; ?></td>
-				<td><?php echo $single_row['email']; ?></td>
-				<td><?php echo $single_row['review']; ?></td>
-                <td><?php echo $single_row['created_at']; ?></td>				
+				<td><?php echo $single_row['location']; ?></td>
+				<td><?php echo $single_row['slug']; ?></td>
 				<td>
-					<a href="reviews.php?form_action=edit&id=<?php echo $single_row['id'];?>">Edit</a> | 					
-					<a href="reviews.php?form_action=delete&id=<?php echo $single_row ['id'];?>">Delete</a> 
+					<a href="locations.php?form_action=edit&id=<?php echo $single_row['id'];?>">Edit</a> | 					
+					<a href="locations.php?form_action=delete&id=<?php echo $single_row ['id'];?>">Delete</a> 
 					
 				</td>
 			</tr>
@@ -198,7 +174,7 @@
 		
 		<hr/>
 		
-		<?php include "reviews_form.php"; ?>
+		<?php include "locations_form.php"; ?>
 
 		
     </div> <!-- /container -->
