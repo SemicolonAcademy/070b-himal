@@ -22,7 +22,7 @@ if(isset($_POST['submit']))
 	}		
    
 	if ($email !="" && $password != "") {
-		$query = "select * from `{$table}` where `email`='{$email}' and `password`='{$password}' ";
+		$query = "select * from `{$table}` where `email`='{$email}' and `password`='{$password}' and `type`= 1 ";
 		$result = mysql_query($query);
 		
 		if($result && mysql_num_rows($result)) {

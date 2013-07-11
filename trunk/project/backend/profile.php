@@ -1,12 +1,15 @@
 <?php
    	include "config.php";
+	$id=$_GET['id'];
+	$user_id = $id;
 	
-	$action = $_GET['action'];
-	$form_action = (isset($_GET['form_action'])) ? $_GET['form_action'] : "insert";
+//	$action = $_GET['action'];
+	$form_action=$_GET['form_action'];
+//	$form_action = (isset($_GET['form_action'])) ? $_GET['form_action'] : "insert";
 	
 	
 	
-	if ($action == "delete"){		
+/*	if ($action == "delete"){		
 		
 		$id=$_GET["id"];		
 		
@@ -19,24 +22,22 @@
 		
 		header('Location:profile.php');
 	}
-	
+*/	
 	
 	if ($form_action == "edit" && !$_POST['user_edit']){
 			
 			$id=$_GET["id"];			
 			
-			$get_user_details_query = "select * from profiles WHERE `profiles`.`id` = $id";
+			$get_user_details_query = "select * from profiles WHERE `profiles`.`userid` = $id";
 			$edit_user = mysql_query($get_user_details_query);			
 			$user_data = mysql_fetch_assoc($edit_user);
 			
-			$userid = $user_data['userid'];
+			$userid = $id;
             $bio = $user_data['bio'];
 			$age = $user_data['age'];
 			$paddress = $user_data['permanent_address'];
 			$taddress = $user_data['temp_address'];
-       
-			$city = $user_data['teaching_city'];
-			$location = $user_data['teaching_location'];
+            $teaching_location = $user_data['teaching_location'];
 			$qualification = $user_data['teacher_qualification'];
 			$experience = $user_data['teaching_experience'];
 			$experiyence_year=$user_data['experiyence_years'];
@@ -58,14 +59,12 @@
 			*/
 		
 			
-			$userid = $_POST['uid'];
+			$user_id = $_POST['user_id'];
             $bio = $_POST['bio'];
 			$age = $_POST['age'];
 			$paddress = $_POST['paddress'];
 			$taddress = $_POST['taddress'];
-       
-			$city = $_POST['city'];
-			$location = $_POST['tlocation'];
+			$teaching_location = $_POST['teaching_location'];
 			$qualification = $_POST['qualification'];
 			$experience = $_POST['experience'];
 			$experiyence_year=$_POST['experiyence_year'];
@@ -82,9 +81,9 @@
 			*/
 		
 	
-			if (preg_match("/^[0-9]+$/", $_POST['uid']) ==  0) {
-				$error = true; $euserid = "Enter your ID correctly!!";
-			}
+		/*	if ($_POST['uid'] == "") {
+				$error = true; $euserid = "Enter your user ID !!";
+			} */
 			if ($bio == '') {
 				$error = true;  $ebio="Enter your biodata !!";
 			}
@@ -98,12 +97,6 @@
 						
 			if ($taddress=='') {
 				$error = true;  $etaddress="enter yourtemporary address";
-			}
-			
-
-			
-			if ($location=='') { 
-				$error = true; 	$elocation="enter teaching location";
 			}
 			
 			if ($qualification==''){
@@ -133,14 +126,21 @@
 					$id=$_POST['id'];
 					
 					
-					$sql = "UPDATE `profiles` SET `userid`=  '{$userid}', `bio`=' {$bio}', `age`=' {$age}', `permanent_address`='{$paddress}', `temp_address`='{$taddress}', `teaching_city`=' {$city}', `teaching_location`=' {$location}', `teacher_qualification`='{$qualification}', `teaching_experience`=' {$experience}', `experience_years`='{$experiyence_year}', `max_students`=' {$no_student}', `expected_fee`=' {$fee}', `available_shift`=' {$shift}', `available_timeslot`=' {$timeslot}', `created_at`=' {$time}' WHERE `profiles`.`id` = $id LIMIT 1;";
+					$sql = "UPDATE `profiles` SET `userid`=  '{$user_id}', `bio`=' {$bio}', `age`=' {$age}', `permanent_address`='{$paddress}', `temp_address`='{$taddress}',  `teaching_location`=' {$teaching_location}', `teacher_qualification`='{$qualification}', `teaching_experience`=' {$experience}', `experience_years`='{$experiyence_year}', `max_students`=' {$no_student}', `expected_fee`=' {$fee}', `available_shift`=' {$shift}', `available_timeslot`=' {$timeslot}', `created_at`=' {$time}' WHERE `profiles`.`userid` = $id LIMIT 1;";
 					
 				
-				} else {			
+				} else {		
 
+
+					/*echo "<pre>";
+					print_r($_POST);
+					echo "</pre>";
+					exit;*/
+					
+					$userid=$_POST['user_id'];
 					echo $sql = "INSERT INTO `profiles` 
 			       ( `userid`, `bio`, `age`, `permanent_address`, `temp_address`, `teaching_city`, `teaching_location`, `teacher_qualification`, `teaching_experience`, `experience_years`, `max_students`, `expected_fee`, `available_shift`, `available_timeslot`, `created_at`) 
-			  VALUES ( ' {$userid}', ' {$bio}', '{$age}', '{$paddress}', ' {$taddress}', '{$city}', '  {$location}', ' {$qualification}', '  {$experience}', '{$experiyence_year}', ' {$no_student}', ' {$fee}', ' {$shift}', '{$timeslot}', ' {$time}')";
+			  VALUES ( ' {$user_id}', ' {$bio}', '{$age}', '{$paddress}', ' {$taddress}', '  {$teaching_location}', ' {$qualification}', '  {$experience}', '{$experiyence_year}', ' {$no_student}', ' {$fee}', ' {$shift}', '{$timeslot}', ' {$time}')";
 					
 
 				}
@@ -151,7 +151,7 @@
 				
 				//echo $sql;
 				mysql_query($sql) or die(mysql_error());
-			    header('location: profile.php');
+			    header('location: users.php');
 			
 			
 			} 
@@ -165,7 +165,15 @@
 					
 	
 	$all_users_query="select * from profiles";
-	$all_users=mysql_query($all_users_query);	
+	$all_users=mysql_query($all_users_query);
+
+
+	$get_user_query = "select * from users WHERE `users`.`id` = $id";
+	$user_detail = mysql_query($get_user_query);			
+	$user_detail = mysql_fetch_assoc($user_detail);
+			
+			
+			
 	
 ?>
 
@@ -209,41 +217,20 @@
 
     <div class="container">
 
-	<h3>Profiles</h3>
-			
-	<table class="table table-hover">
-		<tr>
-			
-			<th>S.N</th>
-			<th>Biodata</th>
-			<th>Temporary Address</th>
-			<th>Teaching City</th>
-			<th>Teaching Location</th>
-			<th>Expected Fee</th>
-			<th>Available shift</th>
-			<th>Actions</th>
-		</tr>
-		<?php $i=1; while( $row =mysql_fetch_assoc($all_users)) { ?>
-			<tr>
-				<td><?php echo $i;?></td>
-				<td><?php echo $row['bio']; ?></td>
-				<td><?php echo $row['temp_address']; ?></td>
-				<td><?php echo $row['teaching_city']; ?></td>
-				<td><?php echo $row['teaching_location']; ?></td>
-				<td><?php echo $row['expected_fee']; ?></td>
-				<td><?php echo $row['available_shift']; ?></td>
+	
+	<h3>
+	<?php 
+	
+	if ($form_action == "edit") echo "Edit Profile of ";						
+	else echo "Add Profile of ";
+	
+	echo "\"".$user_detail['first_name'] . " " . $user_detail['middle_name'] . " " . $user_detail['last_name']."\"";
+	?>
+						
+	</h3>					
+						
+	
 
-				<td>
-					<a href="profile.php?form_action=edit&id=<?php echo $row[id];?>">Edit</a> | 
-					<a href="profile.php?action=delete&id=<?php echo $row [id];?>">Delete</a> 
-					
-				</td>
-			</tr>
-		<?php $i++; } ?>
-				
-		</table>
-		
-		<hr/>
 		
 		<?php include "profile_form.php"; ?>
 

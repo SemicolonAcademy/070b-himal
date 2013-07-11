@@ -13,9 +13,9 @@
 				
 	function form_validation(){
 			
-			 if (preg_match("/^[0-9]{1,}$/", $_POST["userid"]) ==  0){
-					$err['userid'] = "   Enter user ID correctly !!";
-					}
+			  if ($_POST['userid'] ==  '') {
+				$error = true; $eusername = "Enter userid !!";
+			        }
 			 if (preg_match("/^[a-zA-Z -]+$/", $_POST["name"]) ==  0){
 					$err['name'] = "   Enter name correctly !!";
 					}

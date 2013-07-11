@@ -1,27 +1,16 @@
-<?php	
-            if(defined('WEB_ROOT')){  //Login Validation ?>  
+<?php if(!defined('WEB_ROOT')) header("location:login.php");?> 
 
 <!--<h3>Add Profiles</h3>-->
 				
 		<form class="form-horizontal" action="profile.php?form_action=<?php echo $form_action?>" method="POST" enctype="multipart/form-data">
 				
+				<input type="hidden" name="user_id" value="<?php echo $user_id;?>" />
+				
 				<?php if ($form_action == "edit") { ?>
-				            <h3>Edit Profiles</h3>
 							<input type="hidden" name="id" value="<?php echo $id;?>" />
-				<?php }else {?> <h3>Add Profiles</h3> <?php }
-
-          				?>		
+				<?php } ?>		
 						
-			<div class="control-group">
-			      <label class="control-label" for="inputAddress">User ID :</label>
-				<div class="controls">
-					<input type="text"  name="uid" value="<?php if ($userid) {echo $userid;}?>" >
-						<?php if($euserid){ ?>
-						<span class="error"> <?php echo $euserid ;?>	</span>
-					<?php } ?>
-				</div>
-			</div>
-			
+	
 			<div class="control-group">
 			  <label class="control-label" for="inputAddress">Biodata :</label>
 				<div class="controls">
@@ -63,31 +52,18 @@
 				</div>
 			</div>
 			
-			 <div class="control-group">
-						                <label class="control-label" for="inputAddress" >Teaching City :</label>
-						             <div class="controls">
-						
-                                             <select name="city">
-                                                 <option>1</option>
-                                                 <option>2</option>
-                                                  <option>3</option>
-                                                   <option>4</option>
-                                                  <option>5</option>
-                                             </select>
-            
-                        
-							         </div>
-							     </div>
-			
 			<div class="control-group">
-				<label class="control-label" for="inputAddress" >Teaching Location :</label>
-				<div class="controls">
-					    <textarea rows="3"  name="tlocation" /><?php if( isset($location)) echo $location; ?></textarea>				
-						<?php if($elocation){ ?>
-						<span class="error"> <?php echo $elocation; ?>	</span>
-					<?php } ?>
-				</div>
-			</div>
+		       <label class="control-label" for="inputAddress" >Teaching Location :</label>
+				  <div class="controls">
+				      <select name="teaching_location">
+					      <?php $sql="select * from locations ";
+							$result=mysql_query($sql);
+							while($row=mysql_fetch_assoc($result)){?>
+								 <option><?php echo $row['location']; ?></option>
+							 <?php } ?>
+                       </select>							 
+				 </div>
+             </div>
 			
 			<div class="control-group">
 			  <label class="control-label" >Qulification :</label>
@@ -181,11 +157,11 @@
 						
                                           <select name="time">
                                               <option>1</option>
-                                                <option>2</option>
-                                                    <option>3</option>
-                                                      <option>4</option>
-                                                       <option>5</option>
-                                   </select>
+                                              <option>2</option>
+                                              <option>3</option>
+                                              <option>4</option>
+                                              <option>5</option>
+                                           </select>
             
                      
 	                           </div>
@@ -199,4 +175,4 @@
 			</div>
 			</div>
 		</form>
-			<?php	}else header("location:login.php");?>
+	
