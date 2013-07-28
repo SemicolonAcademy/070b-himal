@@ -1,3 +1,9 @@
+july 8 2013 8:24PM 
+ALTER TABLE  `users` ADD  `profile` INT NOT NULL DEFAULT  '0' AFTER  `featured`;
+ALTER TABLE  `users` CHANGE  `type`  `type` INT( 11 ) NOT NULL DEFAULT  '0';
+
+
+
 july 8 2013
 ALTER TABLE  `profiles` CHANGE  `teaching_location`  `teaching_location` INT NOT NULL;
 ALTER TABLE `locations` DROP `userid`;
@@ -9,13 +15,7 @@ ADD PRIMARY KEY (  `id` ;
 
 
 
-july 4 2013 10:06 pm
 
-ALTER TABLE  `appointments` CHANGE  `userid`  `userid` VARCHAR( 255 ) NOT NULL;
-ALTER TABLE  `profiles` CHANGE  `userid`  `userid` VARCHAR( 255 ) NOT NULL;
-ALTER TABLE  `reviews` CHANGE  `userid`  `userid` VARCHAR( 255 ) NOT NULL;
-ALTER TABLE  `teacher_level` CHANGE  `userid`  `userid` VARCHAR( 255 ) NOT NULL;
-ALTER TABLE  `teacher_subject` CHANGE  `userid`  `userid` VARCHAR( 255 ) NOT NULL;
 
 
 
