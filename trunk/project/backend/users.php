@@ -1,9 +1,51 @@
 <?php
+    
 	include "config.php";
 	
 	$action = $_GET['action'];
 	$form_action = (isset($_GET['form_action'])) ? $_GET['form_action'] : "insert";
 	
+	
+	
+ /*---------------------Status checking and update-------------------------------------*/	
+	
+	if($form_action == "status"){
+	    
+	   $id=$_GET["id"];
+	    echo $id;
+	    $q="select * from users WHERE `id` = $id";
+		$result=mysql_query($q);	
+		$row=mysql_fetch_assoc($result);
+	    if($row['status']==0){
+	        $sql = "UPDATE `users` SET `status`=1 WHERE `id`=$id LIMIT 1";
+			}
+		else{
+		    $sql = "UPDATE `users` SET `status`=0 WHERE `id`=$id LIMIT 1";
+			}
+	    mysql_query($sql);
+        header('location:users.php');		
+	}
+  
+/*---------------------Recommendation checking and update------------------------------------*/
+  
+	if($form_action == "featured"){
+	    
+	   $id=$_GET["id"];
+	   echo $id;
+	    $q="select * from users WHERE `id` = $id";
+		$result=mysql_query($q);	
+		$row=mysql_fetch_assoc($result);
+	    if($row['featured']==0){
+	        $sql = "UPDATE `users` SET `featured`=1 WHERE `id`=$id LIMIT 1";
+			}
+	    else{
+		    $sql= "UPDATE `users` SET `featured`=0 WHERE `id`=$id LIMIT 1";
+		}	
+		mysql_query($sql);
+        header('location:users.php');		
+	}
+	
+/*---------------------Deleting particular user-------------------------------------*/	
 	
 	
 	if ($action == "delete"){		
@@ -20,9 +62,17 @@
 		$del="DELETE FROM `users` WHERE `id` =$id  LIMIT 1";
 		mysql_query($del);
 		
+		$sql="select * from profiles where profiles.userid=$id";
+		$result=mysql_query($sql);
+		$row=mysql_fetch_assoc($result);
+		
+		$del="DELETE FROM `profiles` WHERE profiels.userid =$id  LIMIT 1";
+		mysql_query($del);
+		
 		header('Location:users.php');
 	}
 	
+	/*---------------------Grab data for editing-------------------------------------*/	
 	
 	if ($form_action == "edit" && !$_POST['user_edit']){
 			
@@ -66,7 +116,7 @@
 			
 				$pos1=strpos($filename,'.');
 				$image_type=substr($filename,-(strlen($filename)-$pos1)+1);
-				$allowed_type = array ('jpeg','jpg','bmp','png','gif'); 
+				$allowed_type = array ('jpeg','jpg','bmp','png','gif','JPG'); 
 			
 				if(!in_array($image_type, $allowed_type)) {
 					$eimage= "Disallowed file type. Please upload jpeg / bmp / png / gif only";
@@ -105,11 +155,11 @@
 			*/
 		
 	
-			if ($username == '') {
-				$error = true; $eusername = "Enter your name !!";
+            if ($username ==  '') {
+				$error = true; $eusername = "Enter your user name !!";
 			}
-			if ($email == '') {
-				$error = true;  $eemail="Enter your email !!";
+			 if(preg_match("/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/", $_POST["email"]) === 0) {
+				$error = true;  $eemail="Enter your email correctly !!";
 			}
 			if ($password == ''){
 				$error = true; $epassword="Enter password !!";
@@ -121,15 +171,15 @@
 			if ($gender== '') { 
 				$error = true;  $egender="Select a gender !!";
 			}
-			if ($first_name=='') {
-				$error = true;  $efirst_name="enter your first name";
+			if (preg_match("/^[a-zA-Z -]+$/", $_POST['first_name']) ==  0) {
+				$error = true;  $efirst_name="enter your first name correctly !!";
 			}
-			if ($last_name=='') {
-				$error = true; $elast_name="enter your last name";
+		    if (preg_match("/^[a-zA-Z -]+$/", $_POST['last_name']) ==  0) {
+				$error = true; $elast_name="enter your last name correctly !! ";
 			}
 			
-			if ($phone=='') { 
-				$error = true; $ephone="enter your phone name";
+			if (preg_match("/^[+0-9]{7,14}$/", $_POST['phone']) ==  0) { 
+				$error = true; $ephone="enter your phone name correctly !!";
 			}
 			
 			if ($address==''){
@@ -143,7 +193,7 @@
 			
 
 						
-			if ($error) {		
+			if (!$error) {		
 
 				$now=time();		
 
@@ -152,8 +202,7 @@
 					$id=$_POST['id'];
 					
 					//delete old image
-					$imagename=$_POST["imagename"];	
-	
+					$imagename=$_POST["imagename"];		
 					$dest_del='./uploads/'.$imagename;
 					if($src) @unlink ($dest_del);
 					
@@ -162,7 +211,7 @@
 				
 				} else {			
 
-					echo $sql = "INSERT INTO `htnepal`.`users` (`id`, `username`,`first_name`,`middle_name`,`last_name`, `password`, `email`, `gender`,`phone`,`address`, `created_on`,`photo`) VALUES (NULL, '$username','$first_name','$middle_name','$last_name','$password', '$email', '$gender','$phone','$address', '$now','$filename')";
+				    $sql = "INSERT INTO `htnepal`.`users` (`id`, `username`,`first_name`,`middle_name`,`last_name`, `password`, `email`, `gender`,`phone`,`address`, `created_on`,`photo`) VALUES (NULL, '$username','$first_name','$middle_name','$last_name','$password', '$email', '$gender','$phone','$address', '$now','$filename')";
 					
 
 				}
@@ -171,7 +220,6 @@
 					--------- If query executes succesfully redirect to base page. -------------
 				*/
 				
-				echo $sql;
 				mysql_query($sql) or die(mysql_error());
 				//header('location: users.php');
 			
@@ -185,8 +233,8 @@
 		--------- Grab data for table -------------
 	*/
 		
-	
-	$all_users_query="select * from users";
+	$id=$_SESSION['id'];
+    $all_users_query="select users.*,profiles.id as profile_id from users left join profiles on  users.id = profiles.userid  ";
 	$all_users=mysql_query($all_users_query);	
 	
 ?>
@@ -195,7 +243,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Bootstrap, from Twitter</title>
+    <title>Users</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -222,105 +270,79 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
       <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
                     <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="assets/ico/favicon.png">
-  </head>
+                                    <link rel="shortcut icon" href="assets/ico/logo.png">
+                                   <style type="text/css">
+<!--
+.style1 {color: #0000FF}
+-->
+    </style>
+    </head>
 
-  <body>
+    <body>
   
- <?php include "navbar.php";?>
+    <?php include "navbar.php";?>
 
-    <div class="container">
+      <div class="container">
 
-		<h3>Users</h3>
+	   <h3 class="style1">Users</h3>
 			
-			<table class="table table-hover">
+		<table class="table table-hover">
+			<tr>
+				<th>S.N.</th>
+				<th>Images</th>
+			<!--<th>Username</th>-->
+				<th>Name</th>
+				<th>Email</th>
+			<!--<th>Gender</th> -->
+				<th>Phone</th>
+			<!--<th>Address</th>-->
+				<th>Status</th>
+				<th>Recommend</th>
+				<th>Created on</th>
+				<th>Actions</th>
+			</tr>
+			<?php $i=1; while( $user =mysql_fetch_assoc($all_users)) {
+            /*			
+			echo "<pre>";
+			var_dump($user);
+			echo "</pre>";  */  
+			?>
 				<tr>
-					<th>S.N.</th>
-					<th>Images</th>
-					<th>Username</th>
-					<th>Name</th>
-					<th>Email</th>
-					<th>Gender</th>
-					<th>Status</th>
-					<th>Created on</th>
-					<th>Actions</th>
-				</tr>
-				<?php $i=1; while( $user =mysql_fetch_assoc($all_users)) { ?>
-					<tr>
-						<td><?php echo $i;?></td>
-						<td><img width="100" src="uploads/<?php echo $user['photo']; ?>" /></td>
-						<td><?php echo $user['username']; ?></td>
-						<td><?php echo $user['first_name'] . " " . $user['middle_name'] . " " . $user['last_name'];?></td>
-						<td><?php echo $user['email']; ?></td>
-						<td><?php echo ($user['gender'] == "m") ? "Male" : "Female"; ?></td>
-						<td><?php echo ($user['status'] == 0) ? "Inactive" : "Active"; ?></td>
-						<td><?php echo date("m-d-Y", $user['created_on']); ?></td>
-						<td>
-							<a href="users.php?form_action=edit&id=<?php echo $user[id];?>">Edit</a> | 
-							<a href="profile.php?id=<?php echo $user[id];?>">Add Profile</a> |
-							<a href="users.php?action=delete&id=<?php echo $user [id];?>">Delete</a> |
-							<a href="#myModal" role="button" class="btn-link" data-toggle="modal">View</a>
-		 
+					<td><?php echo $i;?></td>
+					<td><img width="100" src="uploads/<?php echo $user['photo']; ?>" /></td>
+				<!--<td><?php echo $user['username']; ?></td>-->
+					<td><?php echo $user['first_name'] . " " . $user['middle_name'] . " " . $user['last_name'];?></td>
+					<td><?php echo $user['email']; ?></td>
+				<!--<td><?php echo ($user['gender'] == "m") ? "Male" : "Female"; ?></td>-->
+					<td><?php echo $user['phone']; ?></td>
+				<!--<td><?php echo $user['address']; ?></td>-->
+					<td><?php echo ($user['status'] == 0) ? "Inactive" : "Active"; ?></td>
+					<td><?php echo ($user['featured'] == 0) ? "N/A" : "Recommended"; ?></td>
+					<td><?php echo date("m-d-Y", $user['created_on']); ?></td>
+					<td>
+						<a href="users.php?form_action=status&id=<?php echo $user[id];?>"><?php if($user['status']==0){?>
+								Active<?php } else { ?>Inactive<?php } ?></a> | 
+						<a href="users.php?form_action=featured&id=<?php echo $user[id];?>">
+						<?php if($user['featured']==0){?>
+								Recommend<?php } else { ?>Unrecommend<?php } ?>
+								</a> | 		
+						<a href="users.php?form_action=edit&id=<?php echo $user[id];?>">Edit User</a> <br/>
 
-		 
-							<!-- Modal -->
-							<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-							  <div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-								<h3 id="myModalLabel">Modal header</h3>
-							  </div>
-							  <div class="modal-body">
-								
-								
-									
-							<table class="table table-hover">
-								<tr>
-								<td colspan=2><img width="200" src="uploads/<?php echo $user['photo']; ?>" /></td>
-								<tr>
-									<th>Username</th>
-									<td><?php echo $user['username']; ?></td>
-								</tr>
-								<tr>
-									<th>Name</th>
-									<td><?php echo $user['first_name'] . " " . $user['middle_name'] . " " . $user['last_name'];?></td>
-								</tr>
-								<tr>
-									<th>Email</th>
-									<td><?php echo $user['email']; ?></td>
-								</tr>
-								<tr>
-									<th>Gender</th>
-									<td><?php echo ($user['gender'] == "m") ? "Male" : "Female"; ?></td>
-								</tr>
-								<tr>
-									<th>Phone</th>
-									<td><?php echo $user['phone']; ?></td>
-								</tr>
-								<tr>
-									<th>Address</th>
-									<td><?php echo $user['address']; ?></td>
-								</tr>
-								<tr>
-									<th>Status</th>
-									<td><?php echo ($user['status'] == 0) ? "Inactive" : "Active"; ?></td>
-								</tr>
-								<tr>
-									<th>Created On</th>
-									<td><?php echo date("m-d-Y", $user['created_on']); ?></td>
-								</tr>
-						</table>
-							  </div>
-							  <div class="modal-footer">
-								<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-							  </div>
-							</div>
-							</td>
-					</tr>
+						<a href="profile.php?form_action=<?php echo ($user['profile_id']==NULL)?"insert":"edit"; ?>&id=<?php echo $user['id'];?>">
+						<?php if($user['profile_id']==NULL){?>
+								 Add Profile <?php } else { ?>Edit Profile<?php } ?></a> 
+								 
+								 |
+						<a href="view_profile.php?id=<?php echo $user['id']; ?>">View Profile</a> |
+						<a href="users.php?action=delete&id=<?php echo $user[id];?>">Delete</a> 
 						
-				</table>
-				
+					</td>
+				</tr>
+			<?php $i++; } ?>
+					
+		  </table>
+		
 		<hr/>
-		<?php }?>
 		
 		<?php include "form.php"; ?>
 
