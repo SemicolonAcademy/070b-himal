@@ -77,53 +77,46 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
       <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
                     <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="assets/ico/favicon.png">
+                                   <link rel="shortcut icon" href="assets/ico/logo.png">
   </head>
 
   <body>
 
     <div class="container-narrow">
 
-      <div class="masthead">
-        
-		<a href="signup.php" class="btn btn-success pull-right">Submit Teacher Profile</a>
-			
-		<ul class="nav nav-pills pull-right">
-          <li><a href="home.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>          
-        </ul>
-        <a href=""><img src="images/logo.png" width="160"></img></a>
-      </div>
+     <?php include "navbar.php"; ?>
 
       <hr>
 
       <div class="jumbotron">
         <h3>Search Teachers In Your Area</h3>
-		<form class="form-inline" action="search.html">
+		<form class="form-inline" action="search.php">
 			
 			<select class="input-medium">
 				<option>Select Location</option>
-				<option>Kupondole</option>
-				<option>New Baneshwor</option>
-				<option>Shankhamul</option>
-				<option>Kritipur</option>
-				<option>Thamel</option>
+				<?php $sql="select * from locations";
+				      $result=mysql_query($sql);
+                      while($row=mysql_fetch_assoc($result)){ ?>
+				<option><?php echo $row['location']; ?></option>
+				<?php } ?>
 			</select>
 			
 			<select class="input-medium">
 				<option>Select Subject</option>
-				<option>Math</option>
-				<option>Science</option>
+				<?php $sql="select * from subjects";
+				      $result=mysql_query($sql);
+                      while($row=mysql_fetch_assoc($result)){ ?>
+				<option><?php echo $row['name']; ?></option>
+				<?php } ?>
 			</select>
 			
 			<select>
 				<option>Select Student's Grade</option>
-				<option>Kids</option>
-				<option>Primary (1-5)</option>
-				<option>Lower Secondary (5-8)</option>
-				<option>Secondary (9-10)</option>
-				<option>+2</option>
+				<?php $sql="select * from levels";
+				      $result=mysql_query($sql);
+                      while($row=mysql_fetch_assoc($result)){ ?>
+				<option><?php echo $row['name']; ?></option>
+				<?php } ?>
 			</select>
 			
 			<button type="submit" class="btn" value="Search" >Search</button>
@@ -187,119 +180,26 @@ home tutoring their children.
 		
       <h3 class="breadcrumb text-center">Recomended Teachers</h3>
 	  
-	  
 	  <div class="row-fluid marketing">
-        
+        <?php 
+	    $sql="select * from users where users.featured=1";
+		$result=mysql_query($sql);
+		while($row=mysql_fetch_assoc($result)){?>
+	  
 		<div class="span3">
           
 		  <div class="teacher">
-			<a href="profile.html"><img class="img-polaroid" src="images/140x140.png"></img></a>
+		    
+			<img  class = "img-polaroid" src="./uploads/<?php echo $row['photo']; ?>">
 			<p class="teacher-info">
-				<strong>John Doe</strong><br/> 
+				<strong><?php echo $row['first_name']?></strong><br/> 
 				Kupondole
 			</p>
 		  </div>
          
         </div>
-		
-		<div class="span3">
-          
-		  <div class="teacher">
-			<a href="profile.html"><img class="img-polaroid" src="images/140x140.png"></img></a>
-			<p class="teacher-info">
-				<strong>John Doe</strong><br/> 
-				Kupondole
-			</p>
-		  </div>
-         
-        </div>
-		
-		
-		<div class="span3">
-          
-		  <div class="teacher">
-			<a href="profile.html"><img class="img-polaroid" src="images/140x140.png"></img></a>
-			<p class="teacher-info">
-				<strong>John Doe</strong><br/> 
-				Kupondole
-			</p>
-		  </div>
-         
-        </div>
-		
-		
-		<div class="span3">
-          
-		  <div class="teacher">
-			<a href="profile.html"><img class="img-polaroid" src="images/140x140.png"></img></a>
-			<p class="teacher-info">
-				<strong>John Doe</strong><br/> 
-				Kupondole
-			</p>
-		  </div>
-         
-        </div>
-		</div>
-		
-		<div class="row-fluid marketing">
-        
-		<div class="span3">
-          
-		  <div class="teacher">
-			<a href="profile.html"><img class="img-polaroid" src="images/140x140.png"></img></a>
-			<p class="teacher-info">
-				<strong>John Doe</strong><br/> 
-				Kupondole
-			</p>
-		  </div>
-         
-        </div>
-		
-		<div class="span3">
-          
-		  <div class="teacher">
-			<a href="profile.html"><img class="img-polaroid" src="images/140x140.png"></img></a>
-			<p class="teacher-info">
-				<strong>John Doe</strong><br/> 
-				Kupondole
-			</p>
-		  </div>
-         
-        </div>
-		
-		
-		<div class="span3">
-          
-		  <div class="teacher">
-			<a href="profile.html"><img class="img-polaroid" src="images/140x140.png"></img></a>
-			<p class="teacher-info">
-				<strong>John Doe</strong><br/> 
-				Kupondole
-			</p>
-		  </div>
-         
-        </div>
-		
-		
-		<div class="span3">
-          
-		  <div class="teacher">
-			<a href="profile.html"><img class="img-polaroid" src="images/140x140.png"></img></a>
-			<p class="teacher-info">
-				<strong>John Doe</strong><br/> 
-				Kupondole
-			</p>
-		  </div>
-         
-        </div>
-	
-
-		
-		</div>
-		
-		
-				
-		
+		<?php } ?> 
+		</div>	
 		
 	<div class="jumbotron">
         
