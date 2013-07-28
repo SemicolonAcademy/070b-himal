@@ -3,6 +3,14 @@
    $id=$_GET['id'];
    
    $sql="select * from users,profiles where users.id=profiles.userid and users.id=$id limit 1";
+   
+/*   
+   SELECT * FROM `users` 
+LEFT JOIN `profiles`
+ON `users`.id = `profiles`.userid
+WHERE `users`.id = 54
+*/
+
    $result=mysql_query($sql);
    $user=mysql_fetch_assoc($result);   
 ?>
